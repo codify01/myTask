@@ -76,8 +76,8 @@ const RightBar = () => {
         <div className="hidden md:flex flex-col justify-between bg-black text-accent-white w-1/5 h-[90vh] border-l border-neutral-600 p-3 ps-5 pb-5">
             <div className="flex flex-wrap">
                 {
-                    CardTwoArray.map(({title, widthTaken, count, addsstyles, headingsize}) => (
-                        <CardTwo category={title} space={widthTaken} count={count} font={addsstyles} headfont={headingsize} />
+                    CardTwoArray.map(({title, widthTaken, count, addsstyles, headingsize}, index) => (
+                        <CardTwo key={index} category={title} space={widthTaken} count={count} font={addsstyles} headfont={headingsize} />
                     ))
                 }
             </div>

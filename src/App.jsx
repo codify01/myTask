@@ -4,6 +4,7 @@ import HomePage from './pages/home/HomePage'
 import NavBar from './components/NavBar'
 import Footer from './components/Footer'
 import UserDashboard from './pages/dashboard/user/UserDashboard'
+import TaskPage from './pages/dashboard/user/Taskpage'
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<HomePage/>} />
         <Route path='/user' element={<UserDashboard/>}/>
+        <Route path='/task' element={<TaskPage/>} />
       </Routes>
       <Footer/>
     </Router>

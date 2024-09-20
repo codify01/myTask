@@ -5,4 +5,12 @@
 .sContainer {
   @apply container max-w-screen-lg px-3
 }
-
+body{
+  @apply bg-accent-black
+}
+::-webkit-scrollbar{
+  @apply hidden
+}
+.active{
+  @apply  font-semibold text-accent-black 
+}

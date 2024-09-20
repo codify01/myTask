@@ -6,7 +6,7 @@ const LeftBar = () => {
 
     const eachTask = [
         {
-            href: "#task1",
+            href: "task1",
             title: "Task 1"
         },
         {
@@ -53,14 +53,14 @@ const LeftBar = () => {
             <div className="flex flex-col leading-tight items-center w-full">
                 <img src={img1} alt="..." className="w-[80px] h-[80px] rounded-full object-cover" />
                 <h3 className="font-bold text-lg truncate w-11/12">Adeleke Oluwamayokun</h3>
-                <small className="truncate w-11/12 text-xs">adelekeoluwamayokun27@gmail.com</small>
+                <small className="truncate w-11/12 opacity-60 text-xs">adelekeoluwamayokun27@gmail.com</small>
             </div>
             <div className="space-y-4 h-3/5">
                 <h3 className="font-bold text-neutral-300 text-xl">Tasks</h3>
-                <ul className="text-lg overflow-y-scroll h-[85%] shadow-accent-white">
+                <ul className="text-lg grid overflow-y-scroll h-[85%] shadow-accent-white">
                     {
                         eachTask.map(({href, title}, index) => (
-                            <Onetasklist href={href} title={title} />
+                            <Onetasklist key={index} href={href} title={title} />
                         ))
                     }
                 </ul>

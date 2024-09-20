@@ -6,7 +6,7 @@ import { CiBellOn } from "react-icons/ci";
 const NavBar = () => {
   return (
   <header className='dark:bg-neutral-950'>
-      <nav className='h-[9vh] dark:bg-neutral-900 fixed w-full z-20 flex items-center px-5  justify-between border-b border-neutral-400 dark:border-neutral-500'>
+      <nav className='h-[8vh] dark:bg-neutral-900 fixed w-full z-20 flex items-center px-5  justify-between border-b border-neutral-400 dark:border-neutral-500'>
       <h3 className='font-extrabold text-2xl'>myTask</h3>
       <div className="flex gap-3 items-center">
         <CiBellOn className='text-2xl' />
@@ -16,7 +16,7 @@ const NavBar = () => {
         </button>
       </div>
     </nav>
-    <div className='h-[9vh]'>
+    <div className='h-[8vh]'>
 
     </div>
   </header>

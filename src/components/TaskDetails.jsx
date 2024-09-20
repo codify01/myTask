@@ -3,7 +3,10 @@ import React from 'react'
 const TaskDetails = () => {
   return (
     <div>
-        task details
+        <div className=''>
+            <h1>Task Details</h1>
+            <hr className='border-2'/>
+        </div>
     </div>
   )
 }

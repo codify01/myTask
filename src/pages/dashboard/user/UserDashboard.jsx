@@ -3,8 +3,9 @@ import TaskDetails from '../../../components/TaskDetails'
 
 const UserDashboard = () => {
   return (
-    <div>
+    <div className='sContainer'>
         <TaskDetails/>
+       
     </div>
   )
 }

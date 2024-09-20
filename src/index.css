@@ -6,3 +6,9 @@
   @apply container max-w-screen-lg px-3
 }
 
+.swiper-scrollbar {
+  @apply h-2 dark:bg-neutral-600 rounded-full
+}
+.swiper-scrollbar-drag {
+  @apply dark:bg-neutral-200 rounded-full
+}

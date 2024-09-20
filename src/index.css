@@ -14,3 +14,16 @@ body{
 .active{
   @apply  font-semibold text-accent-black 
 }
+.number-2,
+.number{
+  height: 80px;
+  width: 80px;
+  backdrop-filter: blur(10px);
+  color: #54BAAC;
+  background: #54baac1d;
+  @apply flex justify-center items-center mt-2
+}
+.number-2{
+  width: 60px;
+  height: 60px;
+}

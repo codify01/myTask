@@ -15,9 +15,9 @@ const TaskDetailsCard = () => {
             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Est fugit suscipit soluta modi. Quo, quisquam. Amet ex cum rem quaerat sunt tenetur et asperiores blanditiis ipsam? Assumenda beatae provident distinctio eveniet, eos aperiam, corrupti pariatur, sapiente quae inventore odit nihil doloremque minus possimus mollitia animi corporis delectus officia! Quas, recusandae?
         </p>
        </div>
-        <div className='flex items-center justify-between'>
-            <span>00:00:20</span>
-            <div className='flex gap-2 items-center'>
+        <div className='flex flex-col md:flex-row md:items-center justify-between space-y-2 md:space-y-0'>
+            <span className='font-semibold'>00:00:20</span>
+            <div className='flex justify-between gap-2 items-center'>
                 <BtnOne name={"I'm done"} icons={<GiCheckMark className='text-green-700'/>} style={'border-green-800 bg-green-900/20 hover:bg-green-900'}/>
                 <BtnOne name={"I'm on leave"} icons={<RxCross1 className='text-red-700'/>} style={'border-red-800 bg-red-900/20 hover:bg-red-900'}/>
             </div>

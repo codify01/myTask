@@ -1,75 +1,82 @@
 import React from "react";
-import img1 from "../assets/images/img1.jpeg"
-import Onetasklist from "./Tasklist";
+import img1 from "../assets/images/img1.jpeg";
+import { MdSpaceDashboard, MdGroups2, MdCardMembership } from "react-icons/md";
+import { IoLogOut } from "react-icons/io5";
+import { Link, NavLink } from "react-router-dom";
+
+const eachTask = [
+    {
+        href: "/user/dashboard",
+        title: "Dashboard",
+        icon: <MdSpaceDashboard className="size-6" />
+    },
+    {
+        href: "/create-user",
+        title: "Create user",
+        icon: <MdSpaceDashboard className="size-6" />
+    },
+    {
+        href: "/add-task",
+        title: "Assign task",
+        icon: <MdSpaceDashboard className="size-6" />
+    },
+    {
+        href: "/team",
+        title: "Team Member",
+        icon: <MdCardMembership className="size-6" />
+    },
+    {
+        href: "/groups",
+        title: "Groups",
+        icon: <MdGroups2 className="size-6" />
+    },
+    {
+        href: "/pending-task",
+        title: "Pending task",
+        icon: <MdSpaceDashboard className="size-6" />
+    },
+];
 
 const LeftBar = () => {
-
-    const eachTask = [
-        {
-            href: "task1",
-            title: "Task 1"
-        },
-        {
-            href: "task2",
-            title: "Task 2"
-        },
-        {
-            href: "task3",
-            title: "Task 3"
-        },
-        {
-            href: "task4",
-            title: "Task 4"
-        },
-        {
-            href: "task5",
-            title: "Task 5"
-        },
-        {
-            href: "task6",
-            title: "Task 6"
-        },
-        {
-            href: "task7",
-            title: "Task 7"
-        },
-        {
-            href: "task8",
-            title: "Task 8"
-        },
-        {
-            href: "task9",
-            title: "Task 9"
-        },
-        {
-            href: "task10",
-            title: "Task 10"
-        }
-    ]
-
+    
     return (
+        <div className="hidden md:block space-y-5 relative bg-accent-white dark:bg-accent-black dark:text-accent-white w-1/5 h-[92vh] border-r border-neutral-400 dark:border-neutral-500 px-5 py-5">
 
-        <div className="flex flex-col justify-between bg-black text-accent-white w-1/5 h-[90vh] border-r border-neutral-600 p-4 ps-5 pb-5">
-            <div className="flex flex-col leading-tight items-center w-full">
-                <img src={img1} alt="..." className="w-[80px] h-[80px] rounded-full object-cover" />
+            <div className="flex flex-col leading-tight items-center w-full text-center">
+                <img src={img1} alt="User profile" className="w-[80px] h-[80px] rounded-full object-cover" />
                 <h3 className="font-bold text-lg truncate w-11/12">Adeleke Oluwamayokun</h3>
-                <small className="truncate w-11/12 opacity-60 text-xs">adelekeoluwamayokun27@gmail.com</small>
+                <small className="truncate w-11/12 text-xs">adelekeoluwamayokun27@gmail.com</small>
             </div>
-            <div className="space-y-4 h-3/5">
-                <h3 className="font-bold text-neutral-300 text-xl">Tasks</h3>
-                <ul className="text-lg grid overflow-y-scroll h-[85%] shadow-accent-white">
+
+            <div className="space-y-4 h-3/4">
+                <ul className="overflow-y-scroll hover:shadow-accent-white">
                     {
-                        eachTask.map(({href, title}, index) => (
-                            <Onetasklist key={index} href={href} title={title} />
+                        eachTask.map(({ href, title, icon }, index) => (
+                            <NavLink 
+                                to={href} 
+                                key={index} 
+                                className={({ isActive }) =>
+                                    isActive
+                                        ? 'bg-pry text-pry'
+                                        : 'text-neutral-500 hover:bg-pry hover:text-accent-white transition-all duration-300'
+                                }
+                            >
+                                <div className="flex items-center gap-3 mb-3 font-medium text-base ms-2  rounded-md py-4 px-2 hover:opacity-100">
+                                    {icon}
+                                    <li className="">{title}</li>
+                                </div>
+                            </NavLink>
                         ))
                     }
                 </ul>
             </div>
-            <a href="" className="text-neutral-600 text-sm">Logout</a>
+
+            <Link to="/logout" className="absolute left-5 bottom-5 flex gap-2 items-center font-semibold text-neutral-500 hover:text-neutral-500/60">
+                <span>Log Out</span>
+                <IoLogOut className="size-6" />
+            </Link>
         </div>
+    );
+};
 
-    )
-
-}
-
-export default LeftBar
+export default LeftBar;

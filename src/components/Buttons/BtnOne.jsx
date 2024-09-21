@@ -1,8 +1,8 @@
 import React from 'react'
 
-const BtnOne = () => {
+const BtnOne = ({name, icons, style}) => {
   return (
-    <div>BtnOne</div>
+    <button className={`py-2 px-4 border rounded text-sm flex items-center gap-2 transition-all duration-300 ${style}`}><span>{name}</span>{icons}</button>
   )
 }
 

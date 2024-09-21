@@ -13,6 +13,8 @@ import Createtask from './pages/dashboard/admin/create';
 import Adduser from './pages/dashboard/admin/Adduser';
 import Profile from './pages/dashboard/user/Profile';
 import GroupList from './pages/group chat/GroupList';
+import Listoftasks from './pages/dashboard/admin/Listoftasks';
+import Login from './pages/dashboard/Login';
 
 const App = () => {
 	
@@ -25,15 +27,20 @@ const App = () => {
 					{/* <div className="overflow-y-scroll md:max-w-[60%]"> */}
 						<Routes>
 							<Route path="/" element={<HomePage />} />
-							<Route path='/admin' element={<SuperAdmin/>}/>
 							<Route path="/user/dashboard" element={<UserDashboard />} />
 							<Route path='/team' element={<Teamembers/>}/>
 							<Route path='/profile' element={<Profile/>}/>
+							<Route path="/task" element={<TaskPage />} />
+
+							<Route path="/login" element={<Login />} />
+
+							<Route path='/admin' element={<SuperAdmin/>}/>
 							<Route path="/admin/tasks" element={<TaskPage />} />
 							<Route path="/admin/add-user" element={<Adduser />} />
 							<Route path='/admin/assign-task' element={<Createtask/>}/>
 							<Route path="/task" element={<TaskPage />} />
 							<Route path='/groups' element={<GroupList/>}/>
+							<Route path='/admin/pending-task' element={<Listoftasks/>}/>
 						</Routes>
 					{/* </div> */}
 					<RightBar />

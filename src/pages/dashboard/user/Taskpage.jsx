@@ -1,16 +1,12 @@
 import React from 'react'
-import LeftBar from '../../../components/Leftbar'
-import RightBar from '../../../components/Rightbar'
+import Teamembers from './Team'
 
 const TaskPage = () => {
 
   return (
 
     <>
-      <div className='flex justify-between'>
-        <LeftBar/>
-        <RightBar/>
-      </div>
+      <Teamembers/>
     </>
   )
 

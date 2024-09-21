@@ -5,11 +5,8 @@ const Adduser = () => {
 
     return (
 
-        <div className="sContainer">
-            <div className="flex items-center w-full mb-4 justify-center">
-				<h1 className="md:basis-2/3 basis-2/3 text-4xl font-bold">Create Member</h1>
-				<hr className="hidden md:block border border-accent-black dark:border-accent-white rounded-full basis-2/3" />
-			</div>
+        <div className="sContainer pt-3">
+            <Headline title={"Create Member"} />
             <form action="" className="flex mx-auto flex-wrap items-center justify-between w-90% max-w-[100%]">
                 <div className="flex flex-col md:w-[48.5%] w-full">
                     <label htmlFor="">Full Name</label>

@@ -5,6 +5,7 @@ import CarouselOne from './Carousels/CarouselOne';
 
 import Createtask from '../pages/dashboard/admin/create';
 import Teamembers from '../pages/dashboard/user/Team';
+import Headline from './Headline';
 
 const TaskDetails = () => {
   const list = [
@@ -12,30 +13,15 @@ const TaskDetails = () => {
   ]
 	return (
 		<div className="sContainer mt-3 space-y-4 h-[93vh] overflow-y-auto pb-24">
-			<Teamembers/>
-			<div className="flex items-center justify-center">
-				<h1 className="basis-1/3 text-4xl font-bold">Task Details</h1>
-				<hr className="hidden md:block border border-accent-black dark:border-accent-white rounded-full basis-2/3" />
-			</div>
+			{/* <Teamembers/> */}
+			<Headline title={'Task Details'}/>
 			<CarouselOne/>
 			{
 				list.map(()=>(
 				<TaskDetailsCard />
 				))
 			}
-			<Createtask/>
-		<div className="sContainer mt-3 space-y-4 h-[93vh] overflow-y-auto">
-			<div className="flex items-center justify-center">
-				<h1 className="md:basis-1/3 text-4xl font-bold">Task Details</h1>
-				<hr className="hidden md:block border border-accent-black dark:border-accent-white rounded-full basis-2/3" />
-			</div>
-			<CarouselOne/>
-      {
-        list.map(()=>(
-          <TaskDetailsCard />
-        ))
-      }
-		</div>
+			{/* <Createtask/> */}
 		</div>
 	);
 };

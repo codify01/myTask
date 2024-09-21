@@ -1,15 +1,16 @@
 import React from "react";
 import BtnOne from "../../../components/Buttons/BtnOne";
+import Headline from "../../../components/Headline";
 
 const Createtask = () => {
 
     return (
+        <>
+        <div className="sContainer pt-3">
+        <Headline title={'Assign task'}/>
 
-        <div className="general grid place-content-center h-max">
-            <div className="flex items-center w-full mb-4 justify-center">
-				<h1 className="md:basis-1/3 basis-2/3 text-4xl font-bold">Create Tasks</h1>
-				<hr className="hidden md:block border border-accent-black dark:border-accent-white rounded-full basis-2/3" />
-			</div>
+            <div>
+           
             <form action="" className="flex mx-auto flex-wrap items-center justify-between w-90% max-w-[100%]">
                 <div className="flex flex-col md:w-[48.5%] w-full">
                     <label for="">Title</label>
@@ -59,8 +60,10 @@ const Createtask = () => {
                 </div>
                 <BtnOne name={"Assign"} style={'mx-auto my-3 py-3 border-0 md:w-1/5 w-1/3 rounded-md justify-center bg-pry'}/>
             </form>
+            </div>
         </div>
 
+        </>
     )
 
 }

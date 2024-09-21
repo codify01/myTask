@@ -1,6 +1,7 @@
 import React from "react";
 import img1 from "../assets/images/img1.jpeg";
-import { MdSpaceDashboard, MdGroups2, MdCardMembership } from "react-icons/md";
+import { MdSpaceDashboard, MdGroups2, MdCardMembership, MdAssignment,MdPendingActions } from "react-icons/md";
+import { IoCreate } from "react-icons/io5";
 import { IoLogOut } from "react-icons/io5";
 import { Link, NavLink } from "react-router-dom";
 
@@ -13,12 +14,12 @@ const eachTask = [
     {
         href: "/create-user",
         title: "Create user",
-        icon: <MdSpaceDashboard className="size-6" />
+        icon: <IoCreate className="size-6" />
     },
     {
-        href: "/add-task",
+        href: "/admin/assign-task",
         title: "Assign task",
-        icon: <MdSpaceDashboard className="size-6" />
+        icon: <MdAssignment className="size-6" />
     },
     {
         href: "/team",
@@ -31,9 +32,9 @@ const eachTask = [
         icon: <MdGroups2 className="size-6" />
     },
     {
-        href: "/pending-task",
+        href: "/admin/tasks",
         title: "Pending task",
-        icon: <MdSpaceDashboard className="size-6" />
+        icon: <MdPendingActions className="size-6" />
     },
 ];
 

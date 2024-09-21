@@ -8,6 +8,8 @@ import TaskPage from './pages/dashboard/user/Taskpage';
 import LeftBar from './components/Leftbar';
 import RightBar from './components/Rightbar';
 import SuperAdmin from './pages/dashboard/SuperAdmin';
+import Teamembers from './pages/dashboard/user/Team';
+import Createtask from './pages/dashboard/admin/create';
 
 const App = () => {
 	return (
@@ -21,6 +23,9 @@ const App = () => {
 							<Route path="/" element={<HomePage />} />
 							<Route path='/admin' element={<SuperAdmin/>}/>
 							<Route path="/user/dashboard" element={<UserDashboard />} />
+							<Route path='/team' element={<Teamembers/>}/>
+							<Route path="/admin/tasks" element={<TaskPage />} />
+							<Route path='/admin/assign-task' element={<Createtask/>}/>
 							<Route path="/task" element={<TaskPage />} />
 						</Routes>
 					</div>

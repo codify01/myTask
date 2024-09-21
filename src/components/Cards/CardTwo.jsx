@@ -1,16 +1,15 @@
-import React from "react";
+import React from 'react';
 
-const CardTwo = ({count, category, space, font, headfont}) => {
+const CardTwo = ({ count, category, bgColor, color, icon, font, headfont }) => {
+	return (
+		<div
+			className={`flex flex-col items-center justify-center p-5 rounded-lg shadow-lg ${bgColor} hover:scale-105 transition-transform duration-300 text-center shadow`}
+		>
+			<div className={`p-4 rounded-full mb-3 ${color}`}>{icon}</div>
+			<h3 className={`font-bold ${headfont} text-neutral-100`}>{category}</h3>
+			<p className={`font-extrabold ${font} text-white`}>{count}</p>
+		</div>
+	);
+};
 
-    return (
-
-        <div className={` ${space} mb-3`}>
-            <small className={`font-bold text-neutral-500 w-32 ${headfont}`}>{category}</small>
-            <h1 className={`number rounded-full font-bold ${font}`}>{count}</h1>
-        </div>
-
-    )
-
-}
-
-export default CardTwo
+export default CardTwo;

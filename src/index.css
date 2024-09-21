@@ -65,3 +65,37 @@ label{
 .radio-inputs .radio input:checked + .name {
   @apply font-semibold border border-green-800 bg-green-900/20
 }
+
+
+
+.frm2{
+  background: #ffffff;
+  border-radius: 10px;
+  border: 1px solid white;
+  
+}
+.frm2 .title{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  text-align: center;
+  padding-bottom: 1.5rem;
+}
+.frm2 label{
+  color: #000;
+}
+.frm2 input{
+  margin-top:  0;
+  color: #000;
+}
+.frm2 input{
+  height: 50px;
+  font-size: 15px;
+  color: white;  
+}
+.frm2 p{
+  font-size: 15px;
+  line-height: 20px;
+}

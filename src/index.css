@@ -27,3 +27,28 @@ body{
   width: 60px;
   height: 60px;
 }
+form{
+  width: 90%;
+  max-width: 100% !important;
+}
+label{
+  @apply text-sm text-neutral-500
+}
+.input-bg{
+  @apply dark:bg-input-bg bg-neutral-200 dark:text-accent-white text-accent-black
+}
+.input-styles{
+  border: 1px solid #47474742;
+  @apply outline-none rounded-md
+}
+.radio-inputs .radio {
+  flex: 1 1 auto;
+}
+.radio-inputs .radio .name {
+  @apply flex cursor-pointer items-center justify-center border-0 dark:text-accent-white text-accent-black transition-all h-[40px] rounded-md
+}
+
+.radio-inputs .radio input:checked + .name {
+  @apply font-semibold border border-green-800 bg-green-900/20
+}
+

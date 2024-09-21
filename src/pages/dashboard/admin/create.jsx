@@ -6,7 +6,7 @@ const Createtask = () => {
 
     return (
         <>
-        <div className="sContainer pt-3">
+        <div className="sContainer overflow-y-auto pt-3">
         <Headline title={'Assign task'}/>
 
             <div>

@@ -6,23 +6,39 @@ import { Link, NavLink } from "react-router-dom";
 
 const eachTask = [
     {
-        href: "/user",
+        href: "/user/dashboard",
         title: "Dashboard",
         icon: <MdSpaceDashboard className="size-6" />
     },
     {
+        href: "/create-user",
+        title: "Create user",
+        icon: <MdSpaceDashboard className="size-6" />
+    },
+    {
+        href: "/add-task",
+        title: "Assign task",
+        icon: <MdSpaceDashboard className="size-6" />
+    },
+    {
         href: "/team",
-        title: "Teams",
+        title: "Team Member",
         icon: <MdCardMembership className="size-6" />
     },
     {
         href: "/groups",
         title: "Groups",
         icon: <MdGroups2 className="size-6" />
-    }
+    },
+    {
+        href: "/pending-task",
+        title: "Pending task",
+        icon: <MdSpaceDashboard className="size-6" />
+    },
 ];
 
 const LeftBar = () => {
+    
     return (
         <div className="hidden md:block space-y-5 relative bg-accent-white dark:bg-accent-black dark:text-accent-white w-1/5 h-[92vh] border-r border-neutral-400 dark:border-neutral-500 px-5 py-5">
 

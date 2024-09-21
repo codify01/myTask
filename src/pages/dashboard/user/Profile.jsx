@@ -1,27 +1,23 @@
 import React from "react";
-import BtnOne from "../../../components/Buttons/BtnOne";
 import Headline from "../../../components/Headline";
+import BtnOne from "../../../components/Buttons/BtnOne";
 
-const Adduser = () => {
+const Profile = () => {
 
     return (
 
         <div className="sContainer pt-3">
-            <Headline title={"Create Member"} />
+            <Headline title={"Update Profile"} />
             <form action="" className="flex mx-auto flex-wrap items-center justify-between w-90% max-w-[100%]">
                 <div className="flex flex-col md:w-[48.5%] w-full">
-                    <label htmlFor="">Full Name</label>
+                    <label htmlFor="">Edit Full Name</label>
                     <input className="my-3 p-3 input-bg bg-neutral-200 input-styles" type="text" />
                 </div>
                 <div className="flex flex-col md:w-[48.5%] w-full">
-                    <label htmlFor="">Email Address</label>
-                    <input className="my-3 p-3 input-bg bg-neutral-200 input-styles" type="email" />
-                </div>
-                <div className="flex flex-col w-full">
-                    <label htmlFor="">Password</label>
+                    <label htmlFor="">Reset Password</label>
                     <input className="my-3 p-3 input-bg bg-neutral-200 input-styles" type="password" />
                 </div>
-                <BtnOne name={"Create Member"} style={'mx-auto my-3 py-3 border-0 md:w-1/5 w-1/3 rounded-md justify-center bg-pry'}/>
+                <BtnOne name={"Update Details"} style={'mx-auto my-3 py-3 border-0 md:w-1/5 w-1/3 rounded-md justify-center bg-pry'}/>
             </form>
         </div>
 
@@ -29,4 +25,4 @@ const Adduser = () => {
 
 }
 
-export default Adduser;
+export default Profile;

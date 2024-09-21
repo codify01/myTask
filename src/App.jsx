@@ -10,6 +10,8 @@ import RightBar from './components/Rightbar';
 import SuperAdmin from './pages/dashboard/SuperAdmin';
 import Teamembers from './pages/dashboard/user/Team';
 import Createtask from './pages/dashboard/admin/create';
+import Adduser from './pages/dashboard/admin/Adduser';
+import Profile from './pages/dashboard/user/Profile';
 
 const App = () => {
 	return (
@@ -18,17 +20,19 @@ const App = () => {
 				<NavBar />
 				<div className="flex justify-between md:h-[92vh] overflow-y-hidden">
 					<LeftBar />
-					<div className="overflow-y-scroll md:max-w-[60%]">
+					{/* <div className="overflow-y-scroll md:max-w-[60%]"> */}
 						<Routes>
 							<Route path="/" element={<HomePage />} />
 							<Route path='/admin' element={<SuperAdmin/>}/>
 							<Route path="/user/dashboard" element={<UserDashboard />} />
 							<Route path='/team' element={<Teamembers/>}/>
+							<Route path='/profile' element={<Profile/>}/>
 							<Route path="/admin/tasks" element={<TaskPage />} />
+							<Route path="/admin/add-user" element={<Adduser />} />
 							<Route path='/admin/assign-task' element={<Createtask/>}/>
 							<Route path="/task" element={<TaskPage />} />
 						</Routes>
-					</div>
+					{/* </div> */}
 					<RightBar />
 				</div>
 				{/* <Footer/> */}

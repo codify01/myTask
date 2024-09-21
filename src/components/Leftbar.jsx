@@ -1,6 +1,7 @@
 import React from "react";
 import img1 from "../assets/images/img1.jpeg";
 import { MdSpaceDashboard, MdGroups2, MdCardMembership, MdAssignment,MdPendingActions } from "react-icons/md";
+import { FaUser } from "react-icons/fa";
 import { IoCreate } from "react-icons/io5";
 import { IoLogOut } from "react-icons/io5";
 import { Link, NavLink } from "react-router-dom";
@@ -12,7 +13,7 @@ const eachTask = [
         icon: <MdSpaceDashboard className="size-6" />
     },
     {
-        href: "/create-user",
+        href: "/admin/add-user",
         title: "Create user",
         icon: <IoCreate className="size-6" />
     },
@@ -25,6 +26,11 @@ const eachTask = [
         href: "/team",
         title: "Team Member",
         icon: <MdCardMembership className="size-6" />
+    },
+    {
+        href: "/profile",
+        title: "Profile",
+        icon: <FaUser className="size-6" />
     },
     {
         href: "/groups",
@@ -49,8 +55,8 @@ const LeftBar = () => {
                 <small className="truncate w-11/12 text-xs">adelekeoluwamayokun27@gmail.com</small>
             </div>
 
-            <div className="space-y-4 h-3/4">
-                <ul className="overflow-y-scroll hover:shadow-accent-white">
+            <div className="space-y-4 overflow-y-auto h-3/4">
+                <ul className="pb-5 hover:shadow-accent-white">
                     {
                         eachTask.map(({ href, title, icon }, index) => (
                             <NavLink 
@@ -72,7 +78,7 @@ const LeftBar = () => {
                 </ul>
             </div>
 
-            <Link to="/logout" className="absolute left-5 bottom-5 flex gap-2 items-center font-semibold text-neutral-500 hover:text-neutral-500/60">
+            <Link to="/logout" className="absolute bg-accent-black border-t border-neutral-700 ps-2 w-full left-0 bottom-0 h-[40px] flex gap-2 items-center font-semibold text-neutral-500 hover:text-neutral-500/60">
                 <span>Log Out</span>
                 <IoLogOut className="size-6" />
             </Link>

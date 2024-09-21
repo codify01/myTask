@@ -1,22 +1,30 @@
 import React from 'react'
 
-const TaskCardOne = () => {
+const TaskCardOne = ({ title, description, status, teamMembers }) => {
   return (
-    <div className='bg-pry text-accent-white py-6 px-3 rounded space-y-3'>
-      <h1 className='text-2xl font-bold'>Task title</h1>
-      <p className='line-clamp-2 text-sm'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae nobis quasi iure, suscipit modi omnis, ipsum aliquid, iusto repellat facilis dolores! Dolore temporibus aperiam cumque perferendis, modi aliquid reiciendis cum?</p>
+    <div className='bg-pry text-accent-white py-6 px-4 rounded-lg space-y-4'>
+      <h1 className='text-2xl font-bold'>{title}</h1>
+
+      <p className='line-clamp-2 text-sm leading-relaxed'>
+        {description}
+      </p>
+
       <div className='flex items-center justify-between'>
-        <div className='bg-yellow-700 rounded-full px-4 py-0.5'>
-          <span className='text-sm'>Pending</span>
+        <div className={`rounded-full px-4 py-0.5 text-sm font-semibold ${status === 'pending' ? 'bg-yellow-500' : status === 'in-progress' ? 'bg-blue-500': status === 'done' ? 'bg-green-500' : 'bg-gray-300'}`}>
+          <span>{status}</span>
         </div>
-        <div className='flex '>
-          <img src="https://picsum.photos/200/300" alt="" className=' w-10 h-10 rounded-full'/>
-          <img src="https://picsum.photos/200/300" alt="" className='-ms-3 w-10 h-10 rounded-full'/>
-          <img src="https://picsum.photos/200/300" alt="" className='-ms-3 w-10 h-10 rounded-full'/>
-          <img src="https://picsum.photos/200/300" alt="" className='-ms-3 w-10 h-10 rounded-full'/>
+
+        <div className='flex -space-x-3'>
+          {teamMembers.slice(0, 4).map(({image}, index) => (
+            <img
+              key={index}
+              src={image}
+              alt={`team member ${index + 1}`}
+              className='w-10 h-10 rounded-full border-2 border-white'
+            />
+          ))}
         </div>
       </div>
-
     </div>
   )
 }

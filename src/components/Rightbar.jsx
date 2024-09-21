@@ -1,6 +1,6 @@
 import React from 'react';
 import CardTwo from './Cards/CardTwo';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { FaCheckCircle, FaClipboardList, FaClock } from 'react-icons/fa';
 
 const RightBar = () => {
@@ -8,7 +8,7 @@ const RightBar = () => {
 		{
 			title: 'Pending Tasks',
 			count: '5',
-			icon: <FaClock className="text-yellow-500" size={30} />,
+			icon: <FaClock className="text-yellow-500" size={20} />,
 			color: 'bg-yellow-300',
 			bgColor: 'bg-yellow-700',
 			font: 'text-2xl',
@@ -17,7 +17,7 @@ const RightBar = () => {
 		{
 			title: 'Total Tasks',
 			count: '12',
-			icon: <FaClipboardList className="text-blue-500" size={30} />,
+			icon: <FaClipboardList className="text-blue-500" size={20} />,
 			color: 'bg-blue-300',
 			bgColor: 'bg-blue-700 scale-105 hover:scale-110',
 			font: 'text-3xl',
@@ -26,7 +26,7 @@ const RightBar = () => {
 		{
 			title: 'Completed Tasks',
 			count: '7',
-			icon: <FaCheckCircle className="text-green-500" size={30} />,
+			icon: <FaCheckCircle className="text-green-500" size={20} />,
 			color: 'bg-green-300',
 			bgColor: 'bg-green-700',
 			font: 'text-2xl',
@@ -46,8 +46,12 @@ const RightBar = () => {
 		{ href: 'task9', title: 'Task 9' },
 		{ href: 'task10', title: 'Task 10' },
 	];
-
+  
+    const ignoredPages = ['/', '/login']
+    const location = useLocation()
+	const isHere = ignoredPages.includes(location.pathname)
 	return (
+        !isHere?
 		<div className="hidden md:block w-1/5 h-[92vh] border-l border-neutral-400 dark:border-neutral-500 p-5 space-y-10">
 			<div className="flex  justify-around items-center -space-x-2">
 				{CardTwoArray.map(
@@ -87,6 +91,7 @@ const RightBar = () => {
 				</ul>
 			</div>
 		</div>
+        : null
 	);
 };
 

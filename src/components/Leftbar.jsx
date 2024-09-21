@@ -4,7 +4,7 @@ import { MdSpaceDashboard, MdGroups2, MdCardMembership, MdAssignment,MdPendingAc
 import { FaUser } from "react-icons/fa";
 import { IoCreate } from "react-icons/io5";
 import { IoLogOut } from "react-icons/io5";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 
 const eachTask = [
     {
@@ -45,8 +45,11 @@ const eachTask = [
 ];
 
 const LeftBar = () => {
-    
+    const ignoredPages = ['/', '/login']
+    const location = useLocation()
+	const isHere = ignoredPages.includes(location.pathname)
     return (
+        !isHere?
         <div className="hidden md:block space-y-5 relative bg-accent-white dark:bg-accent-black dark:text-accent-white w-1/5 h-[92vh] border-r border-neutral-400 dark:border-neutral-500 px-5 py-5">
 
             <div className="flex flex-col leading-tight items-center w-full text-center">
@@ -83,6 +86,7 @@ const LeftBar = () => {
                 <IoLogOut className="size-6" />
             </Link>
         </div>
+        : null
     );
 };
 

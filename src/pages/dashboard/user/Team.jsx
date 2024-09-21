@@ -22,7 +22,7 @@ const Teamembers = () => {
 
     return (
 
-            <div className="border sContainer w-[100%] overflow-y-auto">
+            <div className="sContainer w-[100%] overflow-y-auto">
                <Headline title={'Team members'}/>
                <div className="space-y-5">
                     {

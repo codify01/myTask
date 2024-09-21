@@ -1,6 +1,7 @@
 import React from "react"
 import img3 from "../../../assets/images/img3.png"
 import Teamcard from "../../../components/Cards/Teamcard"
+import Headline from '../../../components/Headline'
 
 const Teamembers = () => {
 
@@ -21,19 +22,16 @@ const Teamembers = () => {
 
     return (
 
-            <div className="personnels">
-                <div className="flex items-center w-full mb-8 justify-center">
-                    <h1 className="md:basis-1/3 basis-2/3 text-4xl font-bold">Team Members</h1>
-                    <hr className="hidden md:block border border-accent-black dark:border-accent-white rounded-full basis-2/3" />
-                </div>
-                <div className="flex flex-col space-y-5">
+            <>
+               <Headline title={'Team members'}/>
+               <div className="space-y-5">
                     {
                         EachTeaMembers.map(({img, name}, index) => (
                             <Teamcard key={index} image={img} name={name}/>
                         ))
                     }
                 </div>
-            </div>
+            </>
 
     )
 

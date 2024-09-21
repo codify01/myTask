@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import HomePage from './pages/home/HomePage';
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
@@ -12,8 +12,10 @@ import Teamembers from './pages/dashboard/user/Team';
 import Createtask from './pages/dashboard/admin/create';
 import Adduser from './pages/dashboard/admin/Adduser';
 import Profile from './pages/dashboard/user/Profile';
+import GroupList from './pages/group chat/GroupList';
 
 const App = () => {
+	
 	return (
 		<>
 			<Router>
@@ -31,6 +33,7 @@ const App = () => {
 							<Route path="/admin/add-user" element={<Adduser />} />
 							<Route path='/admin/assign-task' element={<Createtask/>}/>
 							<Route path="/task" element={<TaskPage />} />
+							<Route path='/groups' element={<GroupList/>}/>
 						</Routes>
 					{/* </div> */}
 					<RightBar />

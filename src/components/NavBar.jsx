@@ -2,10 +2,14 @@ import React from 'react'
 import img2 from "../assets/images/img2.png"
 import img1 from "../assets/images/img1.jpeg"
 import { CiBellOn } from "react-icons/ci";
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const NavBar = () => {
+  const ignoredPages = ['/login']
+  const location = useLocation()
+  const isHere = ignoredPages.includes(location.pathname)
   return (
+  !isHere?
   <header className='dark:bg-neutral-950'>
       <nav className='h-[8vh] dark:bg-neutral-900 fixed w-full z-20 flex items-center px-5  justify-between border-b border-neutral-400 dark:border-neutral-500'>
       <Link to={'/'}><h3 className='font-extrabold text-2xl'>myTask</h3></Link>
@@ -21,6 +25,7 @@ const NavBar = () => {
 
     </div>
   </header>
+  : null
   )
 }
 

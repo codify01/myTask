@@ -1,6 +1,6 @@
 import React from 'react';
 import TaskDetailsCard from './Cards/TaskDetailsCard';
-// import TaskCardOne from './Cards/TaskCardOne';
+import TaskCardOne from './Cards/TaskCardOne';
 import CarouselOne from './Carousels/CarouselOne';
 
 import Createtask from '../pages/dashboard/admin/create';

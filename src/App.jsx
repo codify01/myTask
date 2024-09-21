@@ -13,6 +13,7 @@ import Createtask from './pages/dashboard/admin/create';
 import Adduser from './pages/dashboard/admin/Adduser';
 import Profile from './pages/dashboard/user/Profile';
 import Listoftasks from './pages/dashboard/admin/Listoftasks';
+import Login from './pages/dashboard/Login';
 
 const App = () => {
 	return (
@@ -28,6 +29,8 @@ const App = () => {
 							<Route path='/team' element={<Teamembers/>}/>
 							<Route path='/profile' element={<Profile/>}/>
 							<Route path="/task" element={<TaskPage />} />
+
+							<Route path="/login" element={<Login />} />
 
 							<Route path='/admin' element={<SuperAdmin/>}/>
 							<Route path="/admin/tasks" element={<TaskPage />} />

@@ -38,7 +38,7 @@ const eachTask = [
         icon: <MdGroups2 className="size-6" />
     },
     {
-        href: "/admin/tasks",
+        href: "/admin/pending-task",
         title: "Pending task",
         icon: <MdPendingActions className="size-6" />
     },
@@ -83,7 +83,7 @@ const LeftBar = () => {
                 </ul>
             </div>
 
-            <Link to="/logout" className="absolute bg-accent-black border-t border-neutral-700 ps-2 w-full left-0 bottom-0 h-[40px] flex gap-2 items-center font-semibold text-neutral-500 hover:text-neutral-500/60">
+            <Link to="/" className="absolute bg-accent-black border-t border-neutral-700 ps-2 w-full left-0 bottom-0 h-[40px] flex gap-2 items-center font-semibold text-neutral-500 hover:text-neutral-500/60">
                 <span>Log Out</span>
                 <IoLogOut className="size-6" />
             </Link>

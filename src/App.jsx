@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import HomePage from './pages/home/HomePage';
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
@@ -23,7 +23,7 @@ const App = () => {
 	
 	return (
 		<>
-			<Router>
+			<Router basename='a'>
 				<NavBar />
 				<div className="flex justify-between md:h-[92vh] overflow-y-hidden">
 					<LeftBar />
@@ -36,13 +36,12 @@ const App = () => {
 							<Route path="/task" element={<TaskPage />} />
 							<Route path="/login" element={<Login />} />
 							<Route path='/about' element={<AboutPage/>}/>
+							<Route path='/groups' element={<GroupList/>}/>
 							<Route path='/admin' element={<SuperAdmin/>}/>
 							<Route path="/admin/tasks" element={<TaskPage />} />
 							<Route path="/admin/add-user" element={<Adduser />} />
 							<Route path='/admin/assign-task' element={<Createtask/>}/>
 							<Route path='/admin/all-users' element={<Allusers/>}/>
-							<Route path="/task" element={<TaskPage />} />
-							<Route path='/groups' element={<GroupList/>}/>
 							<Route path='/admin/pending-task' element={<Listoftasks/>}/>
 							<Route path='*' element={<NotFound/>}/>
 						</Routes>

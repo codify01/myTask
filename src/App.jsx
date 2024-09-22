@@ -15,6 +15,7 @@ import Profile from './pages/dashboard/user/Profile';
 import GroupList from './pages/group chat/GroupList';
 import Listoftasks from './pages/dashboard/admin/Listoftasks';
 import Login from './pages/dashboard/Login';
+import Allusers from './pages/dashboard/admin/Alluser';
 
 const App = () => {
 	
@@ -38,6 +39,7 @@ const App = () => {
 							<Route path="/admin/tasks" element={<TaskPage />} />
 							<Route path="/admin/add-user" element={<Adduser />} />
 							<Route path='/admin/assign-task' element={<Createtask/>}/>
+							<Route path='/admin/all-users' element={<Allusers/>}/>
 							<Route path="/task" element={<TaskPage />} />
 							<Route path='/groups' element={<GroupList/>}/>
 							<Route path='/admin/pending-task' element={<Listoftasks/>}/>

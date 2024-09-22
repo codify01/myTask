@@ -17,7 +17,7 @@ const NavBar = () => {
       <Link to={'/'}><img src={img2} alt="..." className="w-32 mx-auto" /></Link>
       <div className="flex gap-3 items-center">
         <CiBellOn className='text-2xl' />
-       {!isHomePage? <button className="btn bg-pry text-accent-black font-semibold rounded-md flex items-center justify-between border-2 border-accent-white gap-2 px-2 py-1 w-[150px]">
+       {!isHomePage? <button className="btn bg-pry font-semibold rounded-md flex items-center justify-between border-2 border-accent-white gap-2 px-2 py-1 w-[150px]">
           <span className='truncate w-10/12 text-sm'>Oluwamayokun</span>
           <img src={img1} alt="..." className="w-5 h-5 rounded-full object-cover" />
         </button>:

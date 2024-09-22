@@ -16,6 +16,7 @@ import GroupList from './pages/group chat/GroupList';
 import Listoftasks from './pages/dashboard/admin/Listoftasks';
 import Login from './pages/dashboard/Login';
 import Allusers from './pages/dashboard/admin/Alluser';
+import AboutPage from './pages/about/AboutPage';
 
 const App = () => {
 	
@@ -34,7 +35,7 @@ const App = () => {
 							<Route path="/task" element={<TaskPage />} />
 
 							<Route path="/login" element={<Login />} />
-
+							<Route path='/about' element={<AboutPage/>}/>
 							<Route path='/admin' element={<SuperAdmin/>}/>
 							<Route path="/admin/tasks" element={<TaskPage />} />
 							<Route path="/admin/add-user" element={<Adduser />} />

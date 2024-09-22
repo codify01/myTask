@@ -126,7 +126,7 @@ const Createtask = () => {
 						{selectedModerators.map((member) => (
 							<span
 								key={member}
-								className="mr-2 p-1 bg-gray-300 rounded text-gray-800"
+								className="mr-2 p-1 input-styles rounded input-bg"
 							>
 								{member}
 								<button

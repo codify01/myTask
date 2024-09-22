@@ -28,6 +28,25 @@ th, td{
 }
 .swiper-scrollbar-drag {
   @apply dark:bg-neutral-200 rounded-full}
+
+  @keyframes bounceAndFade {
+    0%, 100% {
+      transform: scale(0.8);
+      opacity: 0;
+    }
+    50% {
+      transform: scale(1.2);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes spin {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  
 .number-2,
 .number{
   height: 80px;

@@ -11,7 +11,7 @@ const Hero = () => {
 				</h1>
 				<div className="space-x-2">
 					<BtnTwo name={'Get Started'} style={'bg-pry'} path={'login'}/>
-					<BtnTwo name={'Learn More'} />
+					<BtnTwo name={'Learn More'} path={'about'}/>
 				</div>
 			</div>
 			<div className="basis-1/2 hidden md:block">

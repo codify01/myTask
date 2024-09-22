@@ -45,7 +45,7 @@ const eachTask = [
 ];
 
 const LeftBar = () => {
-    const ignoredPages = ['/', '/login']
+    const ignoredPages = ['/', '/login','/about']
     const location = useLocation()
 	const isHere = ignoredPages.includes(location.pathname)
 

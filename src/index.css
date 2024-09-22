@@ -99,3 +99,60 @@ label{
   font-size: 15px;
   line-height: 20px;
 }
+
+
+/* External TailwindCSS with @apply utility */
+nav {
+  @apply py-3 px-4 bg-gray-900 border-b border-gray-600;
+}
+
+.body nav {
+  border-bottom: none;
+}
+
+body {
+  @apply bg-gray-900 text-gray-100;
+  /* If using a background image, add it directly as an inline style or custom class */
+}
+
+.hero-img {
+  @apply w-4/5;
+}
+
+.hero-img img {
+  @apply drop-shadow-lg;
+}
+
+@media (max-width: 950px) {
+  footer {
+    @apply text-center;
+  }
+
+  .quick, .brand {
+    @apply justify-center;
+  }
+}
+
+footer {
+  @apply bg-transparent;
+}
+
+.quick, .brand {
+  @apply flex gap-4;
+}
+
+.brand li {
+  @apply text-white cursor-pointer;
+}
+
+.hero {
+  @apply h-screen grid place-items-center;
+}
+
+.hero h1 {
+  @apply text-4xl md:text-5xl;
+}
+
+.navbar {
+  @apply py-8 px-16;
+}

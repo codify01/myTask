@@ -1,12 +1,14 @@
 import React from "react";
 import Headline from "../../../components/Headline";
 import BtnOne from "../../../components/Buttons/BtnOne";
+import PageTitle from "../../../utilities/PageTitle";
 
 const Profile = () => {
 
     return (
 
         <div className="sContainer pt-3">
+            <PageTitle title={'Profile'}/>
             <Headline title={"Update Profile"} />
             <form action="" className="flex mx-auto flex-wrap items-center justify-between w-90% max-w-[100%]">
                 <div className="flex flex-col md:w-[48.5%] w-full">

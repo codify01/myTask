@@ -2,6 +2,7 @@ import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
+import PageTitle from "../../utilities/PageTitle";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email format").required("Email is required"),
@@ -29,6 +30,7 @@ const Login = () => {
 
   return (
     <div className="flex items-center h-screen mx-auto px-3">
+      <PageTitle title={'Log in'}/>
       <div className="border dark:border-neutral-500 border-neutral-400 p-5 rounded-md dark:bg-neutral-800 bg-neutral-200 space-y-10">
         <div className="text-center">
           <h2 className="font-bold text-3xl text-center text-pry">myTask</h2>

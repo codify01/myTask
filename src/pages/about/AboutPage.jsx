@@ -4,10 +4,12 @@ import BtnOne from "../../components/Buttons/BtnOne";
 import { motion } from "framer-motion"; // Animation library
 import Footer from "../../components/Footer";
 import BtnTwo from "../../components/Buttons/BtnTwo";
+import PageTitle from "../../utilities/PageTitle";
 
 const About = () => {
   return (
     <div className="overflow-y-auto space-y-10">
+        <PageTitle title={'About Us'}/>
     <div className="py-20 px-6 md:px-20 min-h-screen">
       <section className="text-center max-w-4xl mx-auto mb-16">
         <motion.h1

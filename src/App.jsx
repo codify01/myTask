@@ -23,7 +23,7 @@ const App = () => {
 	
 	return (
 		<>
-			<Router basename='a'>
+			<Router>
 				<NavBar />
 				<div className="flex justify-between md:h-[92vh] overflow-y-hidden">
 					<LeftBar />

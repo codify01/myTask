@@ -17,6 +17,7 @@ import Listoftasks from './pages/dashboard/admin/Listoftasks';
 import Login from './pages/dashboard/Login';
 import Allusers from './pages/dashboard/admin/Alluser';
 import AboutPage from './pages/about/AboutPage';
+import NotFound from './pages/NotFound';
 
 const App = () => {
 	
@@ -33,7 +34,6 @@ const App = () => {
 							<Route path='/team' element={<Teamembers/>}/>
 							<Route path='/profile' element={<Profile/>}/>
 							<Route path="/task" element={<TaskPage />} />
-
 							<Route path="/login" element={<Login />} />
 							<Route path='/about' element={<AboutPage/>}/>
 							<Route path='/admin' element={<SuperAdmin/>}/>
@@ -44,6 +44,7 @@ const App = () => {
 							<Route path="/task" element={<TaskPage />} />
 							<Route path='/groups' element={<GroupList/>}/>
 							<Route path='/admin/pending-task' element={<Listoftasks/>}/>
+							<Route path='*' element={<NotFound/>}/>
 						</Routes>
 					{/* </div> */}
 					<RightBar />

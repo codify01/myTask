@@ -29,7 +29,7 @@ const Login = () => {
   });
 
   return (
-    <div className="flex items-center h-screen mx-auto px-3">
+    <div className="flex items-center justify-center h-screen mx-auto px-3">
       <PageTitle title={'Log in'}/>
       <div className="border dark:border-neutral-500 border-neutral-400 p-5 rounded-md dark:bg-neutral-800 bg-neutral-200 space-y-10">
         <div className="text-center">

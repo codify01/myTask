@@ -21,9 +21,9 @@ const TaskDetailsCard = () => {
   return (
     <div className='border dark:border-neutral-500 border-neutral-400 py-8 px-6 rounded-lg dark:bg-neutral-800 bg-neutral-200 space-y-8'>
       <div>
-        <div className='flex items-center justify-between mb-3'>
+        <div className='md:flex md:flex-row md:items-center md:justify-between mb-3 space-y-2'>
           <h1 className='text-2xl font-bold'>The title of the task</h1>
-          <span className='text-sm font-semibold px-3 py-1 bg-red-200 text-red-700 rounded-full'>
+          <span className='text-sm font-semibold px-3 py-1 bg-red-200 text-red-700 rounded-full '>
             Priority: High
           </span>
         </div>

@@ -7,7 +7,6 @@ const Login = () => {
     return (
         
         <div className="login-page sContainer flex justify-center items-center h-[100vh]">
-            {/* <div className="frm2 p-10"> */}
             <div className='border dark:border-neutral-500 border-neutral-400 p-10 rounded-md dark:bg-neutral-800 bg-neutral-200 space-y-10 md:w-[75%] w-full'>
                 <div className="text-center">
                     <h2 className="font-bold text-3xl text-center text-pry">myTask</h2>

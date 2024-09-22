@@ -48,6 +48,8 @@ const LeftBar = () => {
     const ignoredPages = ['/', '/login']
     const location = useLocation()
 	const isHere = ignoredPages.includes(location.pathname)
+
+    
     return (
         !isHere?
         <div className="hidden md:block space-y-5 relative bg-accent-white dark:bg-accent-black dark:text-accent-white w-1/5 h-[92vh] border-r border-neutral-400 dark:border-neutral-500 px-5 py-5">

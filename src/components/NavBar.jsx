@@ -6,8 +6,10 @@ import { Link, useLocation } from 'react-router-dom';
 
 const NavBar = () => {
   const ignoredPages = ['/login']
+  let homePath = ['/']
   const location = useLocation()
   const isHere = ignoredPages.includes(location.pathname)
+  const isHomePage = homePath.includes(location.pathname)
   return (
   !isHere?
   <header className='dark:bg-neutral-950'>
@@ -15,10 +17,12 @@ const NavBar = () => {
       <Link to={'/'}><h3 className='font-extrabold text-2xl'>myTask</h3></Link>
       <div className="flex gap-3 items-center">
         <CiBellOn className='text-2xl' />
-        <button className="btn bg-pry text-accent-black font-semibold rounded-md flex items-center justify-between border-2 border-accent-white gap-2 px-2 py-1 w-[150px]">
+       {!isHomePage? <button className="btn bg-pry text-accent-black font-semibold rounded-md flex items-center justify-between border-2 border-accent-white gap-2 px-2 py-1 w-[150px]">
           <span className='truncate w-10/12 text-sm'>Oluwamayokun</span>
           <img src={img1} alt="..." className="w-5 h-5 rounded-full object-cover" />
-        </button>
+        </button>:
+        <Link to={'/login'} className='bg-pry py-1.5 px-4 rounded font-medium'>Get started</Link>
+        }
       </div>
     </nav>
     <div className='h-[8vh]'>

@@ -47,7 +47,7 @@ const RightBar = () => {
 		{ href: 'task10', title: 'Task 10' },
 	];
   
-    const ignoredPages = ['/', '/login', '/about']
+    const ignoredPages = ['/', '/login', '/about', '*']
     const location = useLocation()
 	const isHere = ignoredPages.includes(location.pathname)
 	return (

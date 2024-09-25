@@ -4,7 +4,9 @@ import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import PageTitle from "../../utilities/PageTitle";
 import axios from "axios";
+import toast, { Toaster } from 'react-hot-toast'; // Import toast
 
+// Validation schema for formik
 const validationSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email format").required("Email is required"),
   password: Yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
@@ -12,7 +14,8 @@ const validationSchema = Yup.object().shape({
 
 const Login = () => {
   const navigate = useNavigate();
-  
+
+  // Formik setup for form handling
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -26,57 +29,57 @@ const Login = () => {
       
       try {
         // Make the API call with axios
-        const { data } = await axios.post(url, values, {withCredentials:true});
+        const { data } = await axios.post(url, values, { withCredentials: true });
         
-        console.log(data);
-        if(data.status === 'success'){
-          localStorage.setItem('token', data.token)
-              const token = localStorage.getItem('token')
-              const options = {
-                headers: {
-                  'Authorization': `Bearer ${token}`,
-                  'Content-Type': 'application/json'
-                }
-              }
-              try {
-                if (!token) {
-                  console.log('no active session')
-                  return
-                } 
-                const data = await axios.get('https://apitask.sunmence.com.ng/session.php', options)
-                if (data) {
-                  console.log(data.data.user);
-                  localStorage.setItem('user', JSON.stringify(data.data.user))
-                } else {
-                  'no user'
-                }
-        
-              } catch (err) {
-                setError("Failed to fetch session data");
-              } finally {
-                // setSubmitting(false);
-              }
-              
-              console.log("Login Successfully");
-            }else{
-              console.error("Login failed")
+        if (data.status === 'success') {
+          // Display success toast
+          toast.success("Login successful!");
+
+          // Save the token securely using httpOnly cookies (for better security)
+          // For now, using localStorage (replace with secure cookie handling)
+          localStorage.setItem('token', data.token);
+
+          // Fetch the session/user data if needed
+          const token = localStorage.getItem('token');
+          const options = {
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json',
+            },
+          };
+
+          // Check active session
+          const sessionResponse = await axios.get('https://apitask.sunmence.com.ng/session.php', options);
+          
+          if (sessionResponse.data.user) {
+            localStorage.setItem('user', JSON.stringify(sessionResponse.data.user));
+            toast.success("Session retrieved successfully!");
+          }
+
+          // Navigate to user dashboard after success
+          navigate('/user/dashboard');
+
+        } else {
+          // Display error toast if login failed
+          toast.error("Login failed. Please check your credentials.");
         }
 
       } catch (error) {
+        // Display error toast for exceptions
+        toast.error("Error occurred during login. Please try again.");
         console.error('Error fetching data', error);
-        
       } finally {
         setSubmitting(false);
-        navigate('/user/dashboard');
-        resetForm()
+        resetForm(); // Reset the form
       }
     },
-
-
   });
 
   return (
     <div className="flex items-center justify-center h-screen mx-auto px-3">
+      {/* React Hot Toast component */}
+      
+      
       <PageTitle title={'Log in'} />
       <div className="border dark:border-neutral-500 border-neutral-400 p-5 rounded-md dark:bg-neutral-800 bg-neutral-200 space-y-10">
         <div className="text-center">

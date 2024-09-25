@@ -3,22 +3,36 @@ import { useFormik } from 'formik';
 import BtnOne from '../../../components/Buttons/BtnOne';
 import Headline from '../../../components/Headline';
 import { FaUpload } from 'react-icons/fa';
+import { toast } from 'react-hot-toast';
 import axios from 'axios';
+import * as Yup from 'yup';
+
+const validationSchema = Yup.object().shape({
+	task_name: Yup.string()
+		.required('Task name is required')
+		.min(3, 'Task name must be at least 3 characters'),
+	task_description: Yup.string()
+		.required('Task description is required')
+		.min(10, 'Description must be at least 10 characters'),
+	priority: Yup.string().required('Please select a priority'),
+	date: Yup.date().required('Please select a due date'),
+	time: Yup.string().required('Please select a time'),
+});
 
 const Createtask = () => {
 	const [inputValue, setInputValue] = useState('');
 	const [selectedModerators, setSelectedModerators] = useState([]);
 	const [fileName, setFileName] = useState('');
+	const [taskImageBase64, setTaskImageBase64] = useState('');
 	const [moderators, setModerators] = useState([]);
 
 	useEffect(() => {
 		const fetchModerators = async () => {
 			try {
 				const { data } = await axios.get('https://apitask.sunmence.com.ng/alluser.php');
-				console.log(data.users);
 				setModerators(data.users);
 			} catch (error) {
-				console.error('Error fetching moderators:', error);
+				toast.error('Error fetching moderators');
 			}
 		};
 
@@ -28,37 +42,58 @@ const Createtask = () => {
 	const formik = useFormik({
 		initialValues: {
 			task_name: '',
-			task_image: '',
 			task_description: '',
 			priority: '',
 			moderators: [],
-			assignee_name: '',
-			assignee_email: '',
 			time: '',
 			date: '',
-			status: 'in-progress'
+			status: 'in-progress',
 		},
-		onSubmit: (values) => {
-			console.log({ ...values, fileName });
+		validationSchema,
+		onSubmit: async (values, { resetForm }) => {
 			const url = 'https://apitask.sunmence.com.ng/task.php';
 
-			axios.post(url, { ...values, fileName }).then((response) => {
-				console.log(response.data);
-			}).catch((err) => {
-				console.log(err.message);
-			});
+			const taskData = {
+				...values,
+				moderators: selectedModerators.map((m) => m.email),
+				task_img: taskImageBase64,
+			};
+
+			try {
+				const response = await axios.post(url, taskData, {
+					headers: { 'Content-Type': 'application/json' },
+				});
+				if (response.data) {
+					toast.success(response.data.message);
+					resetForm();
+					setFileName('');
+					setSelectedModerators([]);
+					setTaskImageBase64('');
+				}
+			} catch (error) {
+				toast.error(error.message);
+			}
 		},
 	});
 
-	const handleInputChange = (e) => {
-		setInputValue(e.target.value);
+	const handleFileChange = (e) => {
+		const selectedFile = e.target.files[0];
+		if (selectedFile) {
+			setFileName(selectedFile.name);
+
+			const reader = new FileReader();
+			reader.onloadend = () => {
+				setTaskImageBase64(reader.result)
+			};
+			reader.readAsDataURL(selectedFile)
+		}
 	};
 
 	const handleModeratorSelect = (moderator) => {
 		if (!selectedModerators.some((m) => m.email === moderator.email)) {
 			const newSelectedModerators = [...selectedModerators, moderator];
 			setSelectedModerators(newSelectedModerators);
-			formik.setFieldValue('moderators', newSelectedModerators.map(m => m.email));
+			formik.setFieldValue('moderators', newSelectedModerators.map((m) => m.email));
 		}
 		setInputValue('');
 	};
@@ -66,23 +101,15 @@ const Createtask = () => {
 	const handleRemoveModerator = (moderator) => {
 		const updatedModerators = selectedModerators.filter((m) => m.email !== moderator.email);
 		setSelectedModerators(updatedModerators);
-
-		formik.setFieldValue('moderators', updatedModerators.map(m => m.email));
+		formik.setFieldValue('moderators', updatedModerators.map((m) => m.email));
 	};
 
 	const filteredModerators = moderators.filter(
 		(moderator) =>
-			moderator.firstname && 
+			moderator.firstname &&
 			moderator.firstname.toLowerCase().includes(inputValue.toLowerCase()) &&
 			!selectedModerators.some((m) => m.email === moderator.email)
 	);
-
-	const handleFileChange = (e) => {
-		const file = e.target.files[0];
-		if (file) {
-			setFileName(file.name);
-		}
-	};
 
 	return (
 		<div className="sContainer overflow-y-auto pt-3">
@@ -99,9 +126,14 @@ const Createtask = () => {
 						name="task_name"
 						onChange={formik.handleChange}
 						value={formik.values.task_name}
+						onBlur={formik.handleBlur} 
 					/>
+					{formik.touched.task_name && formik.errors.task_name ? (
+						<div className="text-red-500 text-sm">{formik.errors.task_name}</div>
+					) : null}
 				</div>
 
+				{/* File Upload */}
 				<div className="flex flex-col md:w-[48.5%] w-full">
 					<label>Image</label>
 					<input
@@ -129,7 +161,11 @@ const Createtask = () => {
 						className="resize-none my-3 p-3 input-bg input-styles"
 						onChange={formik.handleChange}
 						value={formik.values.task_description}
+						onBlur={formik.handleBlur}
 					/>
+					{formik.touched.task_description && formik.errors.task_description ? (
+						<div className="text-red-500 text-sm">{formik.errors.task_description}</div>
+					) : null}
 				</div>
 
 				<div className="md:w-[48.5%] w-full flex flex-col">
@@ -139,12 +175,16 @@ const Createtask = () => {
 						name="priority"
 						onChange={formik.handleChange}
 						value={formik.values.priority}
+						onBlur={formik.handleBlur}
 					>
 						<option value="" label="Select priority" />
 						<option value="low" label="Low" />
 						<option value="medium" label="Medium" />
 						<option value="high" label="High" />
 					</select>
+					{formik.touched.priority && formik.errors.priority ? (
+						<div className="text-red-500 text-sm">{formik.errors.priority}</div>
+					) : null}
 				</div>
 
 				<div className="md:w-[48.5%] w-full flex flex-col">
@@ -169,7 +209,7 @@ const Createtask = () => {
 						className="my-3 p-3 input-bg input-styles"
 						type="text"
 						value={inputValue}
-						onChange={handleInputChange}
+						onChange={(e) => setInputValue(e.target.value)}
 						placeholder="Type to add moderators..."
 					/>
 					{inputValue && filteredModerators.length > 0 && (
@@ -188,28 +228,6 @@ const Createtask = () => {
 				</div>
 
 				<div className="md:w-[48.5%] w-full flex flex-col">
-					<label>Assignee Email</label>
-					<input
-						className="my-3 p-3 input-bg input-styles"
-						type="email"
-						name="assignee_email"
-						onChange={formik.handleChange}
-						value={formik.values.assignee_email}
-					/>
-				</div>
-
-				<div className="md:w-[48.5%] w-full flex flex-col">
-					<label>Assignee Name</label>
-					<input
-						className="my-3 p-3 input-bg input-styles"
-						type="text"
-						name="assignee_name"
-						onChange={formik.handleChange}
-						value={formik.values.assignee_name}
-					/>
-				</div>
-
-				<div className="md:w-[48.5%] w-full flex flex-col">
 					<label>Due Date</label>
 					<input
 						className="my-3 p-3 input-bg input-styles"
@@ -217,7 +235,11 @@ const Createtask = () => {
 						name="date"
 						onChange={formik.handleChange}
 						value={formik.values.date}
+						onBlur={formik.handleBlur}
 					/>
+					{formik.touched.date && formik.errors.date ? (
+						<div className="text-red-500 text-sm">{formik.errors.date}</div>
+					) : null}
 				</div>
 
 				<div className="md:w-[48.5%] w-full flex flex-col">
@@ -228,7 +250,11 @@ const Createtask = () => {
 						name="time"
 						onChange={formik.handleChange}
 						value={formik.values.time}
+						onBlur={formik.handleBlur}
 					/>
+					{formik.touched.time && formik.errors.time ? (
+						<div className="text-red-500 text-sm">{formik.errors.time}</div>
+					) : null}
 				</div>
 
 				<BtnOne

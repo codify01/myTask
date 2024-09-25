@@ -8,15 +8,12 @@ import axios from 'axios';
 
 const CarouselOne = ({ onItemClick }) => {
   const [tasks, setTasks] = useState([])
-  const [user, setUser] = useState({ email: 'latifat@gmail.com'})
+  const user = JSON.parse(localStorage.getItem('user'))
 
   useEffect(() => {
     const fetchTasks = async () => {
       try {
         const { data } = await axios.get('https://apitask.sunmence.com.ng/alltask.php');
-        
-        console.log('API Response:', data);
-
         if (data && data.tasks) {
           localStorage.setItem('tasks', JSON.stringify(data.tasks))
           const filteredTasks = data.tasks.filter(

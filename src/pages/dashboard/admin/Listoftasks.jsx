@@ -4,73 +4,84 @@ import Headline from "../../../components/Headline";
 import { GiCheckMark, GiTrashCan } from "react-icons/gi";
 import { CiEdit } from "react-icons/ci";
 import axios from "axios";
+import TaskListCard from "../../../components/Cards/TaskListCard";
 
-const Listoftasks = () => {
-    const status = 'pending'
-    const [isModalOpen, setIsModalOpen] = useState(false); 
-    const [currentTask, setCurrentTask] = useState({ id: "", title: "", description: "", dueDate: "" });
-    const [task, setTasks] = useState([])
-    useEffect(()=>{
-        const url = 'https://apitask.sunmence.com.ng/alltask.php'
-        axios.get(url).then(({data})=>{
-            setTasks(data.tasks)
-        }).catch((err)=>{
-            console.log('Error fetching data', err)
-        })
-    },[])
-    
-    const filteredTasks = task.filter(task => task.status === status)
+const Listoftasks = ({ status, title }) => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [currentTask, setCurrentTask] = useState({ id: "", task_name: "", task_description: "", date: "" });
+    const [taskList, setTaskList] = useState([]);
+
+    useEffect(() => {
+        const url = 'https://apitask.sunmence.com.ng/alltask.php';
+        axios.get(url).then(({ data }) => {
+            setTaskList(data.tasks);
+        }).catch((err) => {
+            console.log('Error fetching data', err);
+        });
+    }, []);
+
+    const filteredTasks = taskList.filter(task => task.status === status);
+
+    const handleTaskCompletion = async (task) => {
+        try {
+            const response = await axios.post('https://apitask.sunmence.com.ng/updateTask.php', {
+                id: task.id,
+                status: 'completed',
+            });
+            
+            if (response.data.status === 'success') {
+                const updatedTasks = taskList.map(t => t.id === task.id ? { ...t, status: 'completed' } : t);
+                setTaskList(updatedTasks);
+                console.log(`Task ${task.id} marked as completed.`);
+            } else {
+                console.log('Failed to update task status');
+            }
+        } catch (error) {
+            console.error('Error updating task status', error);
+        }
+    };
 
     const handleEditClick = (task) => {
         setCurrentTask(task);
         setIsModalOpen(true);
     };
 
+    const handleUpdateTask = async () => {
+        try {
+            const response = await axios.post('https://apitask.sunmence.com.ng/updateTask.php', {
+                id: currentTask.id,
+                task_name: currentTask.task_name,
+                task_description: currentTask.task_description,
+                date: currentTask.date,
+            });
+            
+            if (response.data.status === 'success') {
+                const updatedTasks = taskList.map(t => t.id === currentTask.id ? currentTask : t);
+                setTaskList(updatedTasks);
+                setIsModalOpen(false);
+                console.log('Task updated successfully');
+            } else {
+                console.log('Failed to update task');
+            }
+        } catch (error) {
+            console.error('Error updating task', error);
+        }
+    };
+    
     const handleCloseModal = () => {
         setIsModalOpen(false);
     };
 
-    const handleUpdateTask = ()=>{
-        console.log(currentTask);
-    }
-
     return (
         <div className="sContainer w-[100%] overflow-y-auto pt-3">
-            <Headline title={'Pending Tasks'} />
-            <div className="w-full border border-neutral-700 rounded-lg overflow-x-auto">
-                <table className="w-full">
-                    <thead>
-                        <tr className="flex justify-between mb-3">
-                            <th scope="col">Task ID</th>
-                            <th scope="col">Task Title</th>
-                            <th scope="col">Assigned to:</th>
-                            <th scope="col">Due Date</th>
-                            <th scope="col">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody className="space-y-3">
-                        {filteredTasks.map(({id, task_name, moderators,date}) => (
-                            <tr key={task.id} className="flex justify-between items-center">
-                                <td>{id}</td>
-                                <td>{task_name}</td>
-                                <td>{moderators}</td>
-                                <td>{date}</td>
-                                <td className="flex justify-center gap-2">
-                                    <BtnOne icons={<GiCheckMark className="text-green-700 size-4" />} style="border-green-800 bg-green-900/20 ps-0 pe-2 hover:bg-green-900" />
-                                    <button onClick={() => handleEditClick(task)}>
-                                        <BtnOne
-                                            icons={<CiEdit className="text-yellow-700 size-4" />}
-                                            style="border-yellow-800 bg-yellow-900/20 ps-0 pe-2 hover:bg-yellow-900"
-                                        />
-                                    </button>
-                                    <BtnOne icons={<GiTrashCan className="text-red-600 size-4" />} style="border-red-800 bg-red-900/60 ps-0 pe-2 hover:bg-red-900" />
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+            <Headline title={title} />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {filteredTasks.map((task) => (
+                    <TaskListCard task={task}/>
+                ))}
             </div>
 
+            {/* Task Edit Modal */}
             {isModalOpen && (
                 <div className="fixed inset-0 bg-neutral-900 bg-opacity-50 z-50 flex justify-center items-center transition-opacity duration-500 ease-in-out animate-fadeIn">
                     <div className="relative p-4 w-full max-w-md max-h-full">
@@ -99,8 +110,8 @@ const Listoftasks = () => {
                                             name="taskTitle"
                                             id="taskTitle"
                                             className="border border-neutral-500 text-sm rounded block w-full p-3 dark:bg-accent-black dark:border-gray-500 dark:text-white"
-                                            value={currentTask.title}
-                                            onChange={(e) => setCurrentTask({ ...currentTask, title: e.target.value })}
+                                            value={currentTask.task_name}
+                                            onChange={(e) => setCurrentTask({ ...currentTask, task_name: e.target.value })}
                                         />
                                     </div>
                                     <div>
@@ -110,11 +121,15 @@ const Listoftasks = () => {
                                             id="taskDescription"
                                             rows="6"
                                             className="bg-gray-50 border border-neutral-500 text-gray-900 text-sm rounded resize-none block w-full p-3 dark:bg-accent-black dark:border-gray-500 dark:text-white"
-                                            value={currentTask.description}
-                                            onChange={(e) => setCurrentTask({ ...currentTask, description: e.target.value })}
+                                            value={currentTask.task_description}
+                                            onChange={(e) => setCurrentTask({ ...currentTask, task_description: e.target.value })}
                                         />
                                     </div>
-                                    <BtnOne name={"Update"} style="border-green-800 bg-green-900/20 px-5 mx-auto hover:bg-pry" />
+                                    <BtnOne 
+                                        name={"Update"} 
+                                        style="border-green-800 bg-green-900/20 px-5 mx-auto hover:bg-pry" 
+                                        onClick={handleUpdateTask} 
+                                    />
                                 </form>
                             </div>
                         </div>

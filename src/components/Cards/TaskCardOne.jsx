@@ -10,7 +10,7 @@ const TaskCardOne = ({ title, description, status, teamMembers }) => {
       </p>
 
       <div className='flex items-center justify-between'>
-        <div className={`rounded-full px-4 py-0.5 text-sm font-semibold ${status === 'pending' ? 'bg-yellow-500' : status === 'in-progress' ? 'bg-blue-500': status === 'done' ? 'bg-green-500' : 'bg-gray-300'}`}>
+        <div className={`rounded-full px-4 py-0.5 text-sm font-semibold ${status === 'pending' ? 'bg-yellow-500' : status === 'in-progress' ? 'bg-blue-500': status === 'completed' ? 'bg-green-500' : 'bg-gray-300'}`}>
           <span>{status}</span>
         </div>
 

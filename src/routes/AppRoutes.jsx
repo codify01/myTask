@@ -1,7 +1,7 @@
 import React, { Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import MainLayout from '../components/layout/MainLayOut';
-// import Dashboard from '../pages/test/ApiTest';
+import ProtectedRoute from '../components/ProtectedRoute';
 
 const HomePage = lazy(() => import('../pages/home/HomePage'));
 const UserDashboard = lazy(() => import('../pages/dashboard/user/UserDashboard'));
@@ -39,28 +39,69 @@ const Loader = () => {
       </div>
     );
   };
+
 const AppRoutes = () => {
   return (
     <Suspense fallback={<Loader/>}>
       <Routes>
         <Route path="/" element={<MainLayout><HomePage /></MainLayout>} />
-        <Route path="/user/dashboard" element={<MainLayout><UserDashboard /></MainLayout>} />
-        <Route path="/profile" element={<MainLayout><Profile /></MainLayout>} />
-        <Route path="/task" element={<MainLayout><TaskPage /></MainLayout>} />
-        <Route path="/team" element={<MainLayout><Teamembers /></MainLayout>} />
+        
+        {/* Protect User Dashboard Routes */}
+        <Route 
+          path="/user/dashboard" 
+          element={<ProtectedRoute element={() => <MainLayout><UserDashboard /></MainLayout>} />} 
+        />
+        <Route 
+          path="/profile" 
+          element={<ProtectedRoute element={() => <MainLayout><Profile /></MainLayout>} />} 
+        />
+        <Route 
+          path="/task" 
+          element={<ProtectedRoute element={() => <MainLayout><TaskPage /></MainLayout>} />} 
+        />
+        <Route 
+          path="/team" 
+          element={<ProtectedRoute element={() => <MainLayout><Teamembers /></MainLayout>} />} 
+        />
+
+        {/* Public Routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/groups" element={<MainLayout><GroupList /></MainLayout>} />
         <Route path="/about" element={<MainLayout><AboutPage /></MainLayout>} />
-        {/* <Route path="/admin" element={<MainLayout><SuperAdmin /></MainLayout>}> */}
-          <Route path="/admin/tasks" element={<MainLayout><TaskPage /></MainLayout>} />
-          <Route path="/admin/add-user" element={<MainLayout><AddUser /></MainLayout>} />
-          <Route path="/admin/assign-task" element={<MainLayout><CreateTask /></MainLayout>} />
-          <Route path="/admin/all-users" element={<MainLayout><AllUsers /></MainLayout>} />
-          <Route path="/admin/pending-task" element={<MainLayout><ListOfTasks /></MainLayout>} />
-        {/* </Route> */}
-        {/* <Route path='/test' element={<Dashboard/>}/> */}
-        <Route path="*" element={<NotFound />} />
+        
+        {/* Protect Admin Routes */}
+        <Route 
+          path="/admin/tasks" 
+          element={<ProtectedRoute element={() => <MainLayout><TaskPage /></MainLayout>} />} 
+        />
+        <Route 
+          path="/admin/add-user" 
+          element={<ProtectedRoute element={() => <MainLayout><AddUser /></MainLayout>} />} 
+        />
+        <Route 
+          path="/admin/assign-task" 
+          element={<ProtectedRoute element={() => <MainLayout><CreateTask /></MainLayout>} />} 
+        />
+        <Route 
+          path="/admin/all-users" 
+          element={<ProtectedRoute element={() => <MainLayout><AllUsers /></MainLayout>} />} 
+        />
+        <Route 
+          path="/admin/pending-task" 
+          element={<ProtectedRoute element={() => <MainLayout><ListOfTasks title={'Pending Tasks'} status={'pending'} /></MainLayout>} />} 
+        />
+        <Route 
+          path="/admin/progressing-task" 
+          element={<ProtectedRoute element={() => <MainLayout><ListOfTasks title={'Tasks in progress'} status={'in-progress'} /></MainLayout>} />} 
+        />
+        <Route 
+          path="/admin/completed-task" 
+          element={<ProtectedRoute element={() => <MainLayout><ListOfTasks title={'Completed tasks'} status={'completed'} /></MainLayout>} />} 
+        />
+        
+        {/* Test and fallback */}
         <Route path="/test" element={<Taskstatus />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>
   );

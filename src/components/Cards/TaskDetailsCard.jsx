@@ -2,44 +2,72 @@ import React, { useState } from 'react';
 import BtnOne from '../Buttons/BtnOne';
 import { GiCheckMark } from 'react-icons/gi';
 import { RxCross1 } from 'react-icons/rx';
+import { toast } from 'react-hot-toast';
 import { FaPaperclip } from 'react-icons/fa';
+import axios from 'axios';
+import { div } from 'framer-motion/client';
 
 const TaskDetailsCard = ({ task }) => {
   const [comment, setComment] = useState('');
-  const [commentsList, setCommentsList] = useState(task.comments || [])
-  const [attachments, setAttachments] = useState(task.attachments || [])
-  const [activityLog, setActivityLog] = useState(task.activityLog || [])
+  const [commentsList, setCommentsList] = useState(task.comments || []);
+  const [attachments, setAttachments] = useState(task.attachments || []);
+  const [activityLog, setActivityLog] = useState(task.activityLog || []);
+  const [taskStatus, setTaskStatus] = useState(task.status || 'in-progress');
+  const user = JSON.parse(localStorage.getItem('user'));
 
   const handleAddComment = () => {
     if (comment) {
-      const newComment = { id: commentsList.length + 1, author: "Current User", text: comment }
-      setCommentsList([...commentsList, newComment])
+      const newComment = { id: commentsList.length + 1, author: user.firstname, text: comment };
+      setCommentsList([...commentsList, newComment]);
       setActivityLog([
         ...activityLog,
-        { action: 'commented', author: 'Current User', time: 'Just now' }
-      ])
-      setComment('')
+        { action: 'commented', author: user.firstname, time: 'Just now' }
+      ]);
+      setComment('');
     }
-  }
+  };
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const newAttachment = { id: attachments.length + 1, name: file.name }
-      setAttachments([...attachments, newAttachment])
+      const newAttachment = { id: attachments.length + 1, name: file.name, type: file.type, file };
+      setAttachments([...attachments, newAttachment]);
       setActivityLog([
         ...activityLog,
-        { action: 'attached a file', author: 'Current User', time: 'Just now' }
-      ])
+        { action: 'attached a file', author: user.firstname, time: 'Just now' }
+      ]);
     }
-  }
+  };
+
+  const handleStatusChange = async (status) => {
+    try {
+      const response = await axios.post('https://apitask.sunmence.com.ng/alltask.php', {
+        id: task.id,
+        status: status,
+      })
+      console.log(response.data);
+      
+      if (response.data.status === 'success') {
+        setTaskStatus(status);
+        setActivityLog([
+          ...activityLog,
+          { action: `changed status to ${status}`, author: user.firstname, time: 'Just now' }
+        ]);
+        toast.success(`Task status changed to ${status}`)
+      } else {
+        toast.error('Failed to update task status')
+      }
+    } catch (error) {
+      toast.error('Error updating task status')
+    }
+  };
 
   return (
     <div className='border dark:border-neutral-500 border-neutral-400 py-8 px-6 rounded-lg dark:bg-neutral-800 bg-neutral-200 space-y-8'>
       <div>
         <div className='md:flex md:flex-row md:items-center md:justify-between mb-3 space-y-2'>
           <h1 className='text-2xl font-bold'>{task.task_name}</h1>
-          <span className={`text-sm font-semibold px-3 py-1 rounded-full ${task.priority === 'High' ? 'bg-red-200 text-red-700' : 'bg-green-200 text-green-700'}`}>
+          <span className={`text-sm font-semibold px-3 py-1 rounded-full ${task.priority === 'high' ? 'bg-red-200 text-red-700' : task.priority === 'medium' ? 'bg-orange-200 text-orange-700': 'bg-green-200 text-green-700'}`}>
             Priority: {task.priority}
           </span>
         </div>
@@ -51,11 +79,24 @@ const TaskDetailsCard = ({ task }) => {
           Due date: {task.date}
         </span>
         <div className='flex gap-4 items-center'>
-          <BtnOne
-            name={"I'm done"}
-            icons={<GiCheckMark className='text-green-700' />}
-            style={'border-green-800 bg-green-900/20 hover:bg-green-800/40 transition-all duration-300'}
-          />
+          {task.status === 'in-progress' ? (
+           <button  onClick={() => handleStatusChange('pending')}>
+            <BtnOne
+              name={"I'm done"}
+              icons={<GiCheckMark className='text-green-700' />}
+              style={'border-green-800 bg-green-900/20 hover:bg-green-800/40 transition-all duration-300'}
+             
+            />
+           </button>
+          ) : (
+            <button onClick={() => handleStatusChange('in-progress')} >
+                  <BtnOne
+              name={"I'm not done"}
+              icons={<GiCheckMark className='text-yellow-700' />}
+              style={'border-yellow-800 bg-yellow-900/20 hover:bg-yellow-800/40 transition-all duration-300'}
+            />
+              </button>
+          )}
           <BtnOne
             name={"I'm on leave"}
             icons={<RxCross1 className='text-red-700' />}
@@ -96,10 +137,16 @@ const TaskDetailsCard = ({ task }) => {
           {attachments.length === 0 && (
             <span className='text-neutral-700 dark:text-neutral-400'>No attachments added</span>
           )}
-          {attachments.map(({ id, name }) => (
+          {attachments.map(({ id, name, type, file }) => (
             <div key={id} className='flex items-center'>
-              <FaPaperclip className='text-neutral-500 dark:text-neutral-400' />
-              <span className='ml-2'>{name}</span>
+              {type.startsWith('image/') ? (
+                <img src={URL.createObjectURL(file)} alt={name} className='w-16 h-16 object-cover rounded mr-2' />
+              ) : (
+                <>
+                  <FaPaperclip className='text-neutral-500 dark:text-neutral-400' />
+                  <span className='ml-2'>{name}</span>
+                </>
+              )}
             </div>
           ))}
           <div className='flex gap-2 items-center'>

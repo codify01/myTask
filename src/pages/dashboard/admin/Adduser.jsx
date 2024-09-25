@@ -89,8 +89,20 @@ const Adduser = () => {
 					/>
 					{formik.errors.email && <div className="text-red-500">{formik.errors.email}</div>}
 				</div>
-				
-				<div className="flex flex-col w-full">
+				<div className="md:w-[48.5%] w-full flex flex-col">
+					<label>Role</label>
+					<select
+						className="my-3 p-3 input-bg input-styles"
+						name="type"
+						onChange={formik.handleChange}
+						value={formik.values.priority}
+					>
+						<option value="" label="Whose account are you creating?"/>
+						<option value="user" label="User" />
+						<option value="admin" label="Admin" />
+					</select>
+				</div>
+				<div className="md:w-[48.5%] flex flex-col w-full">
 					<label htmlFor="password">Password</label>
 					<input
 						id="password"

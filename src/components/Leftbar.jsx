@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import img1 from "../assets/images/img1.jpeg";
-import { MdSpaceDashboard, MdGroups2, MdCardMembership, MdAssignment, MdPendingActions } from "react-icons/md";
+import { MdSpaceDashboard, MdGroups2, MdCardMembership, MdAssignment, MdPendingActions, MdIncompleteCircle } from "react-icons/md";
+import { AiOutlineFileDone } from "react-icons/ai";
 import { FaUser } from "react-icons/fa";
 import { IoCreate, IoLogOut } from "react-icons/io5";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
@@ -44,11 +45,25 @@ const eachTask = [
         roles: ["user"]
     },
     {
+        href: "/admin/completed-task",
+        title: "Completed task",
+        icon: <AiOutlineFileDone className="size-6" />,
+        roles: ["admin"]
+    },
+    {
+        href: "/admin/progressing-task",
+        title: "Task in progress",
+        icon: <MdIncompleteCircle className="size-6" />,
+        roles: ["admin"]
+    },
+    {
         href: "/admin/pending-task",
         title: "Pending task",
         icon: <MdPendingActions className="size-6" />,
         roles: ["admin"]
     },
+   
+   
 ];
 
 const LeftBar = () => {
@@ -59,7 +74,6 @@ const LeftBar = () => {
     const [currentUserRole, setCurrentUserRole] = useState()
 
     const navigate = useNavigate()
-    // Fetch user data from localStorage on component mount
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
         if (storedUser) {
@@ -76,7 +90,8 @@ const LeftBar = () => {
         localStorage.removeItem('completedTask')
         localStorage.removeItem('token')
         localStorage.removeItem('pendingTask')
-        navigate('/login')
+        localStorage.removeItem('tasks')
+        navigate('/')
     };
 
     return (

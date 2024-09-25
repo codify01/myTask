@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import PageTitle from "../../utilities/PageTitle";
+import axios from "axios";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email format").required("Email is required"),
@@ -10,27 +11,50 @@ const validationSchema = Yup.object().shape({
 });
 
 const Login = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
     },
     validationSchema,
-    onSubmit: (values, { setSubmitting, resetForm }) => {
+    onSubmit: async (values, { setSubmitting, resetForm }) => {
       setSubmitting(true);
-      console.log(values);
-      setTimeout(() => {
+      
+      const url = 'https://apitask.sunmence.com.ng/login.php';
+      
+      try {
+        // Make the API call with axios
+        const { data } = await axios.post(url, values, {withCredentials:true});
+        
+        console.log(data);
+        // console.log(data.user);
+        if(data.status === 'success'){
+          localStorage.setItem('token', data.token)
+          console.log("Login Successfully");
+        navigate('/user/dashboard');
+        }else{
+          console.error("Login failed")
+        }
+
+      } catch (error) {
+        // Handle errors here
+        console.error('Error fetching data', error);
+
+      } finally {
+        // Always set submitting to false after the API call completes
         setSubmitting(false);
-        navigate('/user/dashboard')
         resetForm()
-      }, 3000);
+      }
     },
+
+
   });
 
   return (
     <div className="flex items-center justify-center h-screen mx-auto px-3">
-      <PageTitle title={'Log in'}/>
+      <PageTitle title={'Log in'} />
       <div className="border dark:border-neutral-500 border-neutral-400 p-5 rounded-md dark:bg-neutral-800 bg-neutral-200 space-y-10">
         <div className="text-center">
           <h2 className="font-bold text-3xl text-center text-pry">myTask</h2>

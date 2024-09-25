@@ -22,12 +22,41 @@ const useMobileScreen = () => {
 
 const NavBar = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sessionData, setSessionData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
   const isMobile = useMobileScreen();
-
   const location = useLocation();
   const isHomePage = location.pathname === '/' || location.pathname === '/about';
   const isLogin = location.pathname === '/login';
+
+  // Retrieve user data from local storage on component mount
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      try {
+        const parsedUser = JSON.parse(storedUser);
+        setSessionData(parsedUser);
+        setLoading(false);
+      } catch (err) {
+        setError("Error parsing user data from local storage");
+        setLoading(false);
+      }
+    } else {
+      setError("No user data found in local storage");
+      setLoading(false);
+    }
+  }, []); // Empty dependency array ensures this runs only once on mount
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
 
   return (
     <>
@@ -38,17 +67,17 @@ const NavBar = () => {
             <div className="flex gap-3 items-center">
               {isMobile && !isHomePage && (
                 <button onClick={toggleSidebar} className="text-2xl">
-                  <LuMenu/>
+                  <LuMenu />
                 </button>
               )}
               {isHomePage && (
                 <Link to={'/login'} className='bg-pry py-1.5 px-4 rounded font-medium'>Get started</Link>
               )}
-              {!isMobile && !isHomePage && (
+              {!isMobile && !isHomePage && sessionData && (
                 <>
                   <CiBellOn className='text-2xl' />
                   <button className="btn bg-pry font-semibold rounded-md flex items-center justify-between border-2 border-accent-white gap-2 px-2 py-1 w-[150px]">
-                    <span className='truncate w-10/12 text-sm'>Oluwamayokun</span>
+                    <span className='truncate w-10/12 text-sm capitalize'>{sessionData.firstname + ' ' + sessionData.lastname}</span>
                     <img src={img1} alt="User" className="w-5 h-5 rounded-full object-cover" />
                   </button>
                 </>

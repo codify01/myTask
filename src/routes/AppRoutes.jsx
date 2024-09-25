@@ -1,6 +1,7 @@
 import React, { Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import MainLayout from '../components/layout/MainLayOut';
+// import Dashboard from '../pages/test/ApiTest';
 
 const HomePage = lazy(() => import('../pages/home/HomePage'));
 const UserDashboard = lazy(() => import('../pages/dashboard/user/UserDashboard'));
@@ -56,6 +57,7 @@ const AppRoutes = () => {
           <Route path="/admin/all-users" element={<MainLayout><AllUsers /></MainLayout>} />
           <Route path="/admin/pending-task" element={<MainLayout><ListOfTasks /></MainLayout>} />
         {/* </Route> */}
+        {/* <Route path='/test' element={<Dashboard/>}/> */}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>

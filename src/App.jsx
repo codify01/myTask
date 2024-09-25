@@ -3,11 +3,13 @@ import { HashRouter as Router } from 'react-router-dom';
 import AppRoutes from './routes/AppRoutes';
 
 const App = () => {
-  return (
-    <Router>
-      <AppRoutes />
-    </Router>
-  );
+	return (
+		<Router>
+			{/* <AuthProvider> */}
+				<AppRoutes />
+			{/* </AuthProvider> */}
+		</Router>
+	);
 };
 
 export default App;

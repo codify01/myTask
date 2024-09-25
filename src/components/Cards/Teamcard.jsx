@@ -23,7 +23,6 @@ const Teamcard = ({ image, name }) => {
                 return "bg-gray-400"
         }
     };
-
     return (
         <div className="border dark:border-neutral-500 border-neutral-400 p-4 rounded-lg dark:bg-neutral-800 bg-neutral-100 flex gap-5 relative">
             <div className="w-[80px] h-[80px] rounded-full overflow-hidden border-4 border-pry flex-shrink-0">
@@ -31,7 +30,7 @@ const Teamcard = ({ image, name }) => {
             </div>
             <div className="flex-grow">
                 <div className="flex justify-between items-center mb-3">
-                    <h3 className="font-bold text-xl">{name}</h3>
+                    <h3 className="font-bold text-xl capitalize">{name}</h3>
                 </div>
                 <ul className="space-y-2">
                     {MemberOneTask.map((task) => (

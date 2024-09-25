@@ -3,7 +3,7 @@ import React from 'react'
 const TaskCardOne = ({ title, description, status, teamMembers }) => {
   return (
     <div className='bg-pry text-accent-white py-6 px-4 rounded-lg space-y-4'>
-      <h1 className='text-2xl font-bold'>{title}</h1>
+      <h1 className='text-2xl font-bold line-clamp-1'>{title}</h1>
 
       <p className='line-clamp-2 text-sm leading-relaxed'>
         {description}

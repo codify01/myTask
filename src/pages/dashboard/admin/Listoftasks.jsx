@@ -1,18 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BtnOne from "../../../components/Buttons/BtnOne";
 import Headline from "../../../components/Headline";
 import { GiCheckMark, GiTrashCan } from "react-icons/gi";
 import { CiEdit } from "react-icons/ci";
+import axios from "axios";
 
 const Listoftasks = () => {
-    const [isModalOpen, setIsModalOpen] = useState(false); // Modal state
+    const status = 'pending'
+    const [isModalOpen, setIsModalOpen] = useState(false); 
     const [currentTask, setCurrentTask] = useState({ id: "", title: "", description: "", dueDate: "" });
-
-    const tasks = [
-        { id: 1, title: "Create a React App", assignedTo: "Oluwamayokun", dueDate: "2022-01-31" },
-        { id: 2, title: "Fix Bugs", assignedTo: "Oluwaseun", dueDate: "2022-02-15" },
-        { id: 3, title: "Write Documentation", assignedTo: "Adebayo", dueDate: "2022-03-01" },
-    ];
+    const [task, setTasks] = useState([])
+    useEffect(()=>{
+        const url = 'https://apitask.sunmence.com.ng/alltask.php'
+        axios.get(url).then(({data})=>{
+            setTasks(data.tasks)
+        }).catch((err)=>{
+            console.log('Error fetching data', err)
+        })
+    },[])
+    
+    const filteredTasks = task.filter(task => task.status === status)
 
     const handleEditClick = (task) => {
         setCurrentTask(task);
@@ -42,12 +49,12 @@ const Listoftasks = () => {
                         </tr>
                     </thead>
                     <tbody className="space-y-3">
-                        {tasks.map((task) => (
+                        {filteredTasks.map(({id, task_name, moderators,date}) => (
                             <tr key={task.id} className="flex justify-between items-center">
-                                <td>{task.id}</td>
-                                <td>{task.title}</td>
-                                <td>{task.assignedTo}</td>
-                                <td>{task.dueDate}</td>
+                                <td>{id}</td>
+                                <td>{task_name}</td>
+                                <td>{moderators}</td>
+                                <td>{date}</td>
                                 <td className="flex justify-center gap-2">
                                     <BtnOne icons={<GiCheckMark className="text-green-700 size-4" />} style="border-green-800 bg-green-900/20 ps-0 pe-2 hover:bg-green-900" />
                                     <button onClick={() => handleEditClick(task)}>

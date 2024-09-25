@@ -1,27 +1,40 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import BtnOne from "../../../components/Buttons/BtnOne";
 import Headline from "../../../components/Headline";
+import {useToast} from "../../../hooks/useToast"
+import axios from "axios";
 
 const Adduser = () => {
+	const {showSuccess, showError} = useToast()
 	const formik = useFormik({
 		initialValues: {
-			firstName: '',
-			lastName: '',
+			firstname: '',
+			lastname: '',
 			email: '',
 			password: '',
 		},
-		onSubmit: (values) => {
+		onSubmit: (values, {resetForm}) => {
 			console.log(values);
-			// Handle the form submission (e.g., API call)
+			const url = 'https://apitask.sunmence.com.ng/user.php'
+				axios.post(url, values).then(({data})=>{
+					console.log(data)
+					showSuccess(data.status)
+					resetForm()
+				}).catch((err)=>{
+					console.log(err.message, err.code, err);
+					alert(err.message)
+					showError(err.message)
+					resetForm()
+				})
 		},
 		validate: (values) => {
 			const errors = {};
-			if (!values.firstName) {
-				errors.firstName = "First Name is required";
+			if (!values.firstname) {
+				errors.firstname = "First Name is required";
 			}
-			if (!values.lastName) {
-				errors.lastName = "Last Name is required";
+			if (!values.lastname) {
+				errors.lastname = "Last Name is required";
 			}
 			if (!values.email) {
 				errors.email = "Email is required";
@@ -42,26 +55,26 @@ const Adduser = () => {
 				<div className="flex flex-col md:w-[48.5%] w-full">
 					<label htmlFor="firstName">First Name</label>
 					<input
-						id="firstName"
-						name="firstName"
+						id="firstname"
+						name="firstname"
 						type="text"
 						className="my-3 p-3 input-bg bg-neutral-200 input-styles"
 						onChange={formik.handleChange}
 						value={formik.values.firstName}
 					/>
-					{formik.errors.firstName && <div className="text-red-500">{formik.errors.firstName}</div>}
+					{formik.errors.firstName && <div className="text-red-500">{formik.errors.firstname}</div>}
 				</div>
 				<div className="flex flex-col md:w-[48.5%] w-full">
 					<label htmlFor="lastName">Last Name</label>
 					<input
-						id="lastName"
-						name="lastName"
+						id="lastname"
+						name="lastname"
 						type="text"
 						className="my-3 p-3 input-bg bg-neutral-200 input-styles"
 						onChange={formik.handleChange}
 						value={formik.values.lastName}
 					/>
-					{formik.errors.lastName && <div className="text-red-500">{formik.errors.lastName}</div>}
+					{formik.errors.lastName && <div className="text-red-500">{formik.errors.lastname}</div>}
 				</div>
 				<div className="flex flex-col w-full">
 					<label htmlFor="email">Email Address</label>

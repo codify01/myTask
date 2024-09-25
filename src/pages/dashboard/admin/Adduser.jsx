@@ -13,6 +13,7 @@ const Adduser = () => {
 			lastname: '',
 			email: '',
 			password: '',
+			type:''
 		},
 		onSubmit: (values, {resetForm}) => {
 			console.log(values);
@@ -60,9 +61,9 @@ const Adduser = () => {
 						type="text"
 						className="my-3 p-3 input-bg bg-neutral-200 input-styles"
 						onChange={formik.handleChange}
-						value={formik.values.firstName}
+						value={formik.values.firstname}
 					/>
-					{formik.errors.firstName && <div className="text-red-500">{formik.errors.firstname}</div>}
+					{formik.errors.firstname && <div className="text-red-500">{formik.errors.firstname}</div>}
 				</div>
 				<div className="flex flex-col md:w-[48.5%] w-full">
 					<label htmlFor="lastName">Last Name</label>
@@ -74,7 +75,7 @@ const Adduser = () => {
 						onChange={formik.handleChange}
 						value={formik.values.lastName}
 					/>
-					{formik.errors.lastName && <div className="text-red-500">{formik.errors.lastname}</div>}
+					{formik.errors.lastname && <div className="text-red-500">{formik.errors.lastname}</div>}
 				</div>
 				<div className="flex flex-col w-full">
 					<label htmlFor="email">Email Address</label>
@@ -88,6 +89,7 @@ const Adduser = () => {
 					/>
 					{formik.errors.email && <div className="text-red-500">{formik.errors.email}</div>}
 				</div>
+				
 				<div className="flex flex-col w-full">
 					<label htmlFor="password">Password</label>
 					<input

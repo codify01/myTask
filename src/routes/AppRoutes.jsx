@@ -39,7 +39,6 @@ const Loader = () => {
       </div>
     );
   };
-
 const AppRoutes = () => {
   return (
     <Suspense fallback={<Loader/>}>

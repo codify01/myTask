@@ -18,6 +18,7 @@ const AboutPage = lazy(() => import('../pages/about/AboutPage'));
 const Login = lazy(() => import('../pages/dashboard/Login'));
 const NotFound = lazy(() => import('../pages/NotFound'));
 
+import Taskstatus from '../components/Taskstatus';
 
 const Loader = () => {
     return (
@@ -59,6 +60,7 @@ const AppRoutes = () => {
         {/* </Route> */}
         {/* <Route path='/test' element={<Dashboard/>}/> */}
         <Route path="*" element={<NotFound />} />
+        <Route path="/test" element={<Taskstatus />} />
       </Routes>
     </Suspense>
   );

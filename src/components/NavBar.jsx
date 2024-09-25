@@ -69,13 +69,15 @@ const NavBar = () => {
             {sessionData ? (
               // Logged-in state
               <>
-                <CiBellOn className='text-2xl' />
+              <CiBellOn className='text-2xl' />
+              <Link to={'/user/dashboard'}>
                 <button className="btn bg-pry font-semibold rounded-md flex items-center justify-between border-2 border-accent-white gap-2 px-2 py-1 w-[150px]">
                   <span className='truncate w-10/12 text-sm capitalize'>
                     {sessionData.firstname + ' ' + sessionData.lastname}
                   </span>
                   <img src={img1} alt="User" className="w-5 h-5 rounded-full object-cover" />
                 </button>
+              </Link>
               </>
             ) : (
               // Not logged-in state

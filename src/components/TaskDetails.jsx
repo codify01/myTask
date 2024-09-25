@@ -3,10 +3,6 @@ import TaskDetailsCard from './Cards/TaskDetailsCard';
 import CarouselOne from './Carousels/CarouselOne';
 import Headline from './Headline';
 
-import Createtask from '../pages/dashboard/admin/create';
-import Teamembers from '../pages/dashboard/user/Team';
-import Headline from './Headline';
-
 const TaskDetails = () => {
 	
 	const [selectedTask, setSelectedTask] = useState(null);

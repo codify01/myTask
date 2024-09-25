@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { MdSpaceDashboard, MdGroups2, MdCardMembership, MdAssignment, MdPendingActions } from "react-icons/md";
 import { FaUser } from "react-icons/fa";
 import { IoCreate, IoLogOut } from "react-icons/io5";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import img1 from "../assets/images/img1.jpeg";
 
 
@@ -59,7 +59,6 @@ const MobileLeftBar = ({ isOpen, toggleSidebar }) => {
 
 
 
-  // Retrieve user data from local storage on component mount
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
@@ -76,16 +75,15 @@ const MobileLeftBar = ({ isOpen, toggleSidebar }) => {
       setError("No user data found in local storage");
       setLoading(false);
     }
-  }, []); // Empty dependency array ensures this runs only once on mount
+  }, [])
 
   const ignoredPages = ['/', '/login', '/about', '*'];
   const location = useLocation();
   const isHere = ignoredPages.includes(location.pathname);
+  const navigate = useNavigate()
 
-  // Filter tasks based on the current user's role
   const filteredTasks = eachTask.filter(task => task.roles.includes(currentUserRole));
 
-  // If still loading or error occurred, display a message
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -93,6 +91,15 @@ const MobileLeftBar = ({ isOpen, toggleSidebar }) => {
   if (error) {
     return <div>{error}</div>;
   }
+
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    localStorage.removeItem('tasklength')
+    localStorage.removeItem('completedTask')
+    localStorage.removeItem('token')
+    localStorage.removeItem('pendingTask')
+    navigate('/login')
+};
 
   return (
     <>
@@ -129,14 +136,13 @@ const MobileLeftBar = ({ isOpen, toggleSidebar }) => {
                 </NavLink>
               ))}
             </ul>
-            <Link 
-              to="/" 
-              className="absolute bottom-0 left-0 w-full flex items-center justify-center text-neutral-500 font-medium p-2 border-t border-neutral-700"
-              onClick={toggleSidebar} 
-            >
-              Log Out
-              <IoLogOut className="ml-2" />
-            </Link>
+            <button
+                    onClick={handleLogout}
+                    className="absolute bg-accent-black border-t border-neutral-700 ps-2 w-full left-0 bottom-0 h-[40px] flex gap-2 items-center font-semibold text-neutral-500 hover:text-neutral-500/60"
+                >
+                    <span>Log Out</span>
+                    <IoLogOut className="size-6" />
+                </button>
           </div>
         )}
       </div>

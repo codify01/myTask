@@ -18,17 +18,15 @@ const CarouselOne = ({ onItemClick }) => {
         console.log('API Response:', data);
 
         if (data && data.tasks) {
-          console.log('Tasks before filtering:', data.tasks);
-
+          localStorage.setItem('tasks', JSON.stringify(data.tasks))
           const filteredTasks = data.tasks.filter(
             (task) => task.moderators && task.moderators.includes(user.email)
-          );
-
-          console.log('Filtered Tasks:', filteredTasks);
-
-		  console.log(localStorage.setItem('tasklength', filteredTasks.length));
-		  
-
+          )
+          const pendingTask = filteredTasks.filter((pending)=> pending.status && pending.status === 'pending')
+          const completedTask = filteredTasks.filter((completed)=> completed.status && completed.status === 'completed')
+          localStorage.setItem('pendingTask', pendingTask.length)
+		      localStorage.setItem('tasklength', filteredTasks.length)
+          localStorage.setItem('completedTask', completedTask.length)
           setTasks(filteredTasks);
         } else {
           console.error('No tasks found in API response');

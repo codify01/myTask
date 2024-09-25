@@ -13,9 +13,7 @@ const TaskDetails = () => {
 	return (
 		<div className="sContainer mt-3 space-y-4 h-[93vh] overflow-y-auto pb-24">
 			<Headline title={'Task Details'} />
-			{/* Passing the click handler to CarouselOne */}
 			<CarouselOne onItemClick={handleCarouselItemClick} />
-			{/* Display the TaskDetailsCard only if a task is selected */}
 			{selectedTask && <TaskDetailsCard task={selectedTask} />}
 		</div>
 	);

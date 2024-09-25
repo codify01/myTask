@@ -3,7 +3,7 @@ import img1 from "../assets/images/img1.jpeg";
 import { MdSpaceDashboard, MdGroups2, MdCardMembership, MdAssignment, MdPendingActions } from "react-icons/md";
 import { FaUser } from "react-icons/fa";
 import { IoCreate, IoLogOut } from "react-icons/io5";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 
 
 const eachTask = [
@@ -58,6 +58,7 @@ const LeftBar = () => {
     const isHere = ignoredPages.includes(location.pathname);
     const [currentUserRole, setCurrentUserRole] = useState()
 
+    const navigate = useNavigate()
     // Fetch user data from localStorage on component mount
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
@@ -71,7 +72,11 @@ const LeftBar = () => {
 
     const handleLogout = () => {
         localStorage.removeItem('user');
-        window.location.href = '/login';
+        localStorage.removeItem('tasklength')
+        localStorage.removeItem('completedTask')
+        localStorage.removeItem('token')
+        localStorage.removeItem('pendingTask')
+        navigate('/login')
     };
 
     return (

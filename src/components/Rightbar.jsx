@@ -6,7 +6,7 @@ import { FaCheckCircle, FaClipboardList, FaClock } from 'react-icons/fa';
 const cardData = [
   {
     title: 'Pending Tasks',
-    count: '5',
+    count: localStorage.getItem('pendingTask'),
     icon: <FaClock className="text-yellow-500" size={20} />,
     color: 'bg-yellow-300',
     bgColor: 'bg-yellow-700',
@@ -24,7 +24,7 @@ const cardData = [
   },
   {
     title: 'Completed Tasks',
-    count: '7',
+    count: localStorage.getItem('completedTask'),
     icon: <FaCheckCircle className="text-green-500" size={20} />,
     color: 'bg-green-300',
     bgColor: 'bg-green-700',

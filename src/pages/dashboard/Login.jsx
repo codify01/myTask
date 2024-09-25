@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
@@ -29,22 +29,45 @@ const Login = () => {
         const { data } = await axios.post(url, values, {withCredentials:true});
         
         console.log(data);
-        // console.log(data.user);
         if(data.status === 'success'){
           localStorage.setItem('token', data.token)
-          console.log("Login Successfully");
-        navigate('/user/dashboard');
-        }else{
-          console.error("Login failed")
+              const token = localStorage.getItem('token')
+              const options = {
+                headers: {
+                  'Authorization': `Bearer ${token}`,
+                  'Content-Type': 'application/json'
+                }
+              }
+              try {
+                if (!token) {
+                  console.log('no active session')
+                  return
+                } 
+                const data = await axios.get('https://apitask.sunmence.com.ng/session.php', options)
+                if (data) {
+                  console.log(data.data.user);
+                  localStorage.setItem('user', JSON.stringify(data.data.user))
+                } else {
+                  'no user'
+                }
+        
+              } catch (err) {
+                setError("Failed to fetch session data");
+              } finally {
+                // setSubmitting(false);
+              }
+              
+              console.log("Login Successfully");
+            }else{
+              console.error("Login failed")
         }
 
       } catch (error) {
-        // Handle errors here
         console.error('Error fetching data', error);
-
+        
       } finally {
-        // Always set submitting to false after the API call completes
         setSubmitting(false);
+        navigate('/user/dashboard');
         resetForm()
       }
     },

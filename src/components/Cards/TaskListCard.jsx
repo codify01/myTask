@@ -26,7 +26,9 @@ const TaskListCard = ({ task, onComplete, onEdit }) => {
                 <button onClick={onEdit}>
                     <BtnOne icons={<CiEdit className="text-yellow-700 size-4" />} style="border-yellow-800 bg-yellow-900/20 ps-0 pe-2 hover:bg-yellow-900" />
                 </button>
+                {/* <button>
                 <BtnOne icons={<GiTrashCan className="text-red-600 size-4" />} style="border-red-800 bg-red-900/60 ps-0 pe-2 hover:bg-red-900" />
+                </button> */}
             </div>
         </div>
     );

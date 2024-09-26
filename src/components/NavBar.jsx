@@ -31,7 +31,6 @@ const NavBar = () => {
   const location = useLocation();
   const isHomePage = location.pathname === '/' || location.pathname === '/about';
   
-  // Retrieve user data from local storage on component mount
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
@@ -58,20 +57,12 @@ const NavBar = () => {
           </Link>
 
           <div className="flex gap-3 items-center">
-            {/* Mobile Menu Toggle */}
-            {isMobile && !isHomePage && (
-              <button onClick={toggleSidebar} className="text-2xl">
-                <LuMenu />
-              </button>
-            )}
 
-            {/* Conditional rendering based on session data */}
             {sessionData ? (
-              // Logged-in state
               <>
-              <CiBellOn className='text-2xl' />
+              <CiBellOn className='text-2xl hidden md:block' />
               <Link to={'/user/dashboard'}>
-                <button className="btn bg-pry font-semibold rounded-md flex items-center justify-between border-2 border-accent-white gap-2 px-2 py-1 w-[150px]">
+                <button className="btn bg-pry font-semibold rounded-md hidden md:flex items-center justify-between border-2 border-accent-white gap-2 px-2 py-1 w-[150px]">
                   <span className='truncate w-10/12 text-sm capitalize'>
                     {sessionData.firstname + ' ' + sessionData.lastname}
                   </span>
@@ -80,19 +71,21 @@ const NavBar = () => {
               </Link>
               </>
             ) : (
-              // Not logged-in state
               <>
                 <Link to="/login" className="bg-pry py-1.5 px-4 rounded font-medium">Get started</Link>
               </>
             )}
+            {isMobile && !isHomePage && (
+              <button onClick={toggleSidebar} className="text-2xl">
+                <LuMenu />
+              </button>
+            )}
           </div>
         </nav>
 
-        {/* This spacer maintains the height of the navbar */}
         <div className='h-[8vh]' />
       </header>
 
-      {/* Mobile Sidebar */}
       {isMobile && sidebarOpen && (
         <MobileLeftBar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
       )}

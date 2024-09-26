@@ -99,7 +99,7 @@ const LeftBar = () => {
             <div className="hidden md:block space-y-5 relative bg-accent-white dark:bg-accent-black dark:text-accent-white w-1/5 h-[92vh] border-r border-neutral-400 dark:border-neutral-500 px-5 py-5">
                 <div className="flex flex-col leading-tight items-center w-full text-center">
                     <img src={img1} alt="User profile" className="w-[80px] h-[80px] rounded-full object-cover" />
-                    <h3 className="font-bold text-lg truncate w-11/12">{sessionData.firstname} {sessionData.lastname}</h3>
+                    <h3 className="font-bold text-lg truncate w-11/12 capitalize">{sessionData.firstname} {sessionData.lastname}</h3>
                     <small className="truncate w-11/12 text-xs">{sessionData.email}</small>
                 </div>
 

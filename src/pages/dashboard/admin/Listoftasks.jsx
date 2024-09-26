@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import BtnOne from "../../../components/Buttons/BtnOne";
 import Headline from "../../../components/Headline";
-import { GiCheckMark, GiTrashCan } from "react-icons/gi";
-import { CiEdit } from "react-icons/ci";
 import axios from "axios";
 import TaskListCard from "../../../components/Cards/TaskListCard";
 
@@ -21,30 +19,28 @@ const Listoftasks = ({ status, title }) => {
     }, []);
 
     const filteredTasks = taskList.filter(task => task.status === status);
-
     const handleTaskCompletion = async (task) => {
         try {
             const response = await axios.post('https://apitask.sunmence.com.ng/updateTask.php', {
                 id: task.id,
                 status: 'completed',
-            });
+            })
             
             if (response.data.status === 'success') {
-                const updatedTasks = taskList.map(t => t.id === task.id ? { ...t, status: 'completed' } : t);
+                const updatedTasks = taskList.map(t => t.id === task.id ? { ...t, status: 'completed' } : t)
                 setTaskList(updatedTasks);
-                console.log(`Task ${task.id} marked as completed.`);
+                console.log(`Task ${task.id} marked as completed.`)
             } else {
-                console.log('Failed to update task status');
+                console.log('Failed to update task status')
             }
         } catch (error) {
-            console.error('Error updating task status', error);
+            console.error('Error updating task status', error)
         }
     };
-
     const handleEditClick = (task) => {
-        setCurrentTask(task);
-        setIsModalOpen(true);
-    };
+        setCurrentTask(task)
+        setIsModalOpen(true)
+    }
 
     const handleUpdateTask = async () => {
         try {
@@ -66,22 +62,18 @@ const Listoftasks = ({ status, title }) => {
         } catch (error) {
             console.error('Error updating task', error);
         }
-    };
-    
+    }
     const handleCloseModal = () => {
         setIsModalOpen(false);
-    };
-
+    }
     return (
         <div className="sContainer w-[100%] overflow-y-auto pt-3">
             <Headline title={title} />
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {filteredTasks.map((task) => (
-                    <TaskListCard task={task}/>
+                    <TaskListCard  task={task}/>
                 ))}
             </div>
-
-            {/* Task Edit Modal */}
             {isModalOpen && (
                 <div className="fixed inset-0 bg-neutral-900 bg-opacity-50 z-50 flex justify-center items-center transition-opacity duration-500 ease-in-out animate-fadeIn">
                     <div className="relative p-4 w-full max-w-md max-h-full">

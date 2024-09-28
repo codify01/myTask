@@ -98,7 +98,6 @@ const AppRoutes = () => {
           element={<ProtectedRoute element={() => <MainLayout><ListOfTasks title={'Completed tasks'} status={'completed'} /></MainLayout>} />} 
         />
         
-        {/* Test and fallback */}
         <Route path="/test" element={<Taskstatus />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

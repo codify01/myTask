@@ -1,39 +1,40 @@
 import React, { useEffect, useState } from "react";
 import BtnOne from "../../../components/Buttons/BtnOne";
 import Headline from "../../../components/Headline";
-import { GiCheckMark, GiTrashCan } from "react-icons/gi";
-import { CiEdit } from "react-icons/ci";
 import axios from "axios";
 import TaskListCard from "../../../components/Cards/TaskListCard";
+import {useToast} from '../../../hooks/useToast'
 
 const Listoftasks = ({ status, title }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [currentTask, setCurrentTask] = useState({ id: "", task_name: "", task_description: "", date: "" });
-    const [taskList, setTaskList] = useState([]);
+    const [taskList, setTaskList] = useState([])
+    const {showSuccess, showError, showInfo} = useToast()
 
     useEffect(() => {
         const url = 'https://apitask.sunmence.com.ng/alltask.php';
         axios.get(url).then(({ data }) => {
-            setTaskList(data.tasks);
+            setTaskList(data?.tasks || [])
         }).catch((err) => {
             console.log('Error fetching data', err);
         });
     }, []);
-
-    const filteredTasks = taskList.filter(task => task.status === status);
-
+    const filteredTasks = taskList?.filter(task => task.status === status) || [];
     const handleTaskCompletion = async (task) => {
         try {
-            const response = await axios.post('https://apitask.sunmence.com.ng/updateTask.php', {
+            const response = await axios.post('https://apitask.sunmence.com.ng/alltask.php', {
                 id: task.id,
                 status: 'completed',
             });
+            console.log(response.data);
             
             if (response.data.status === 'success') {
                 const updatedTasks = taskList.map(t => t.id === task.id ? { ...t, status: 'completed' } : t);
                 setTaskList(updatedTasks);
+                showSuccess(`Task ${task.id} marked as completed.`)
                 console.log(`Task ${task.id} marked as completed.`);
             } else {
+                showError('Failed to update task status')
                 console.log('Failed to update task status');
             }
         } catch (error) {
@@ -48,7 +49,7 @@ const Listoftasks = ({ status, title }) => {
 
     const handleUpdateTask = async () => {
         try {
-            const response = await axios.post('https://apitask.sunmence.com.ng/updateTask.php', {
+            const response = await axios.post('https://apitask.sunmence.com.ng/editTask.php', {
                 id: currentTask.id,
                 task_name: currentTask.task_name,
                 task_description: currentTask.task_description,
@@ -67,21 +68,23 @@ const Listoftasks = ({ status, title }) => {
             console.error('Error updating task', error);
         }
     };
-    
     const handleCloseModal = () => {
         setIsModalOpen(false);
     };
-
     return (
         <div className="sContainer w-[100%] overflow-y-auto pt-3">
             <Headline title={title} />
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {filteredTasks.map((task) => (
-                    <TaskListCard task={task}/>
-                ))}
+                {filteredTasks.length > 0 ? (
+                    filteredTasks.map((task) => (
+                        <TaskListCard key={task.id} task={task} onComplete={handleTaskCompletion} onEdit={handleEditClick}/>
+                    ))
+                ) : (
+                    <div className="col-span-3 text-center text-gray-500">
+                        No tasks available for the current status.
+                    </div>
+                )}
             </div>
-
-            {/* Task Edit Modal */}
             {isModalOpen && (
                 <div className="fixed inset-0 bg-neutral-900 bg-opacity-50 z-50 flex justify-center items-center transition-opacity duration-500 ease-in-out animate-fadeIn">
                     <div className="relative p-4 w-full max-w-md max-h-full">
@@ -125,11 +128,12 @@ const Listoftasks = ({ status, title }) => {
                                             onChange={(e) => setCurrentTask({ ...currentTask, task_description: e.target.value })}
                                         />
                                     </div>
+                                    <button onClick={handleUpdateTask} >
                                     <BtnOne 
                                         name={"Update"} 
                                         style="border-green-800 bg-green-900/20 px-5 mx-auto hover:bg-pry" 
-                                        onClick={handleUpdateTask} 
                                     />
+                                    </button>
                                 </form>
                             </div>
                         </div>

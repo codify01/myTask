@@ -3,7 +3,7 @@ import { GiCheckMark, GiTrashCan } from "react-icons/gi";
 import { CiEdit } from "react-icons/ci";
 import BtnOne from "../Buttons/BtnOne";
 
-const TaskListCard = ({ task, onComplete, onEdit }) => {
+const TaskListCard = ({ task, onComplete, onEdit, }) => {
     return (
         <div key={task.id} className="border dark:border-neutral-600 rounded-lg p-4 shadow dark:bg-neutral-800 space-y-4">
             <div className="flex justify-between items-center">
@@ -26,7 +26,9 @@ const TaskListCard = ({ task, onComplete, onEdit }) => {
                 <button onClick={onEdit}>
                     <BtnOne icons={<CiEdit className="text-yellow-700 size-4" />} style="border-yellow-800 bg-yellow-900/20 ps-0 pe-2 hover:bg-yellow-900" />
                 </button>
+                {/* <button>
                 <BtnOne icons={<GiTrashCan className="text-red-600 size-4" />} style="border-red-800 bg-red-900/60 ps-0 pe-2 hover:bg-red-900" />
+                </button> */}
             </div>
         </div>
     );

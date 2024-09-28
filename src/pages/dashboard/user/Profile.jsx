@@ -6,28 +6,27 @@ import PageTitle from "../../../utilities/PageTitle";
 import { FaUpload } from "react-icons/fa";
 
 const Profile = () => {
-    const [fileName, setFileName] = useState(''); // To display selected file name
+    const [fileName, setFileName] = useState('')
 
     const formik = useFormik({
         initialValues: {
-            fName: '',
-            lName: '',
-            uPass: '',
-            uPic: null 
+            firstname: '',
+            lastname: '',
+            password: '',
+            profile_picture: null 
         },
         onSubmit: (values) => {
             console.log('Form Submitted:', values);
+
         },
     });
-
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         if (file) {
             setFileName(file.name);
-            formik.setFieldValue('uPic', file)
+            formik.setFieldValue('profile_picture', file)
         }
     };
-
     return (
         <div className="sContainer pt-3">
             <PageTitle title={'Profile'} />
@@ -37,25 +36,25 @@ const Profile = () => {
                 className="flex mx-auto flex-wrap items-center justify-between w-90% max-w-[100%]"
             >
                 <div className="flex flex-col md:w-[48.5%] w-full">
-                    <label htmlFor="fName">Edit First Name</label>
+                    <label htmlFor="firstname">Edit First Name</label>
                     <input
-                        name="fName"
-                        id="fName"
+                        name="firstname"
+                        id="firstname"
                         className="my-3 p-3 input-bg bg-neutral-200 input-styles"
                         type="text"
                         onChange={formik.handleChange}
-                        value={formik.values.fName}
+                        value={formik.values.firstname}
                     />
                 </div>
                 <div className="flex flex-col md:w-[48.5%] w-full">
-                    <label htmlFor="lName">Edit Last Name</label>
+                    <label htmlFor="lastname">Edit Last Name</label>
                     <input
-                        name="lName"
-                        id="lName"
+                        name="lastname"
+                        id="lastname"
                         className="my-3 p-3 input-bg bg-neutral-200 input-styles"
                         type="text"
                         onChange={formik.handleChange}
-                        value={formik.values.lName}
+                        value={formik.values.lastname}
                     />
                 </div>
                 <div className="flex flex-col md:w-[48.5%] w-full">
@@ -63,12 +62,12 @@ const Profile = () => {
                     <input
                         className="my-3 p-3 input-bg input-styles rounded-lg focus:outline-none"
                         type="file"
-                        id="uPic"
+                        id="profile_picture"
                         style={{ display: 'none' }}
                         onChange={handleFileChange}
                     />
                     <label
-                        htmlFor="uPic"
+                        htmlFor="profile_picture"
                         className="my-3 flex items-center py-3.5 px-2 input-bg input-styles cursor-pointer"
                     >
                         <FaUpload className="mr-2" />
@@ -76,14 +75,14 @@ const Profile = () => {
                     </label>
                 </div>
                 <div className="flex flex-col md:w-[48.5%] w-full">
-                    <label htmlFor="uPass">Reset Password</label>
+                    <label htmlFor="password">Reset Password</label>
                     <input
-                        name="uPass"
-                        id="uPass"
+                        name="password"
+                        id="password"
                         className="my-3 p-3 input-bg bg-neutral-200 input-styles"
                         type="password"
                         onChange={formik.handleChange}
-                        value={formik.values.uPass}
+                        value={formik.values.password}
                     />
                 </div>
                 <BtnOne

@@ -3,11 +3,13 @@ import BtnOne from "../../../components/Buttons/BtnOne";
 import Headline from "../../../components/Headline";
 import axios from "axios";
 import TaskListCard from "../../../components/Cards/TaskListCard";
+import {useToast} from '../../../hooks/useToast'
 
 const Listoftasks = ({ status, title }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [currentTask, setCurrentTask] = useState({ id: "", task_name: "", task_description: "", date: "" });
     const [taskList, setTaskList] = useState([])
+    const {showSuccess, showError, showInfo} = useToast()
 
     useEffect(() => {
         const url = 'https://apitask.sunmence.com.ng/alltask.php';
@@ -17,21 +19,22 @@ const Listoftasks = ({ status, title }) => {
             console.log('Error fetching data', err);
         });
     }, []);
-
     const filteredTasks = taskList?.filter(task => task.status === status) || [];
-    
     const handleTaskCompletion = async (task) => {
         try {
             const response = await axios.post('https://apitask.sunmence.com.ng/alltask.php', {
                 id: task.id,
                 status: 'completed',
             });
+            console.log(response.data);
             
             if (response.data.status === 'success') {
                 const updatedTasks = taskList.map(t => t.id === task.id ? { ...t, status: 'completed' } : t);
                 setTaskList(updatedTasks);
+                showSuccess(`Task ${task.id} marked as completed.`)
                 console.log(`Task ${task.id} marked as completed.`);
             } else {
+                showError('Failed to update task status')
                 console.log('Failed to update task status');
             }
         } catch (error) {
@@ -65,11 +68,9 @@ const Listoftasks = ({ status, title }) => {
             console.error('Error updating task', error);
         }
     };
-
     const handleCloseModal = () => {
         setIsModalOpen(false);
     };
-
     return (
         <div className="sContainer w-[100%] overflow-y-auto pt-3">
             <Headline title={title} />

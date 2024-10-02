@@ -24,15 +24,11 @@ const Loader = () => {
     return (
       <div className="flex justify-center items-center h-screen">
         <div className="relative flex space-x-2">
-          {/* Background rotating ring */}
           <div className="absolute inset-0 w-24 h-24 border-4 border-t-pry border-neutral-200 rounded-full animate-spin"></div>
-  
           {/* First dot */}
           <div className="w-5 h-5 bg-pry rounded-full animate-bounceAndFade"></div>
-  
           {/* Second dot with delay */}
           <div className="w-5 h-5 bg-pry rounded-full animate-bounceAndFade animation-delay-200"></div>
-  
           {/* Third dot with longer delay */}
           <div className="w-5 h-5 bg-pry rounded-full animate-bounceAndFade animation-delay-400"></div>
         </div>
@@ -45,7 +41,6 @@ const AppRoutes = () => {
       <Routes>
         <Route path="/" element={<MainLayout><HomePage /></MainLayout>} />
         
-        {/* Protect User Dashboard Routes */}
         <Route 
           path="/user/dashboard" 
           element={<ProtectedRoute element={() => <MainLayout><UserDashboard /></MainLayout>} />} 
@@ -63,12 +58,10 @@ const AppRoutes = () => {
           element={<ProtectedRoute element={() => <MainLayout><Teamembers /></MainLayout>} />} 
         />
 
-        {/* Public Routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/groups" element={<MainLayout><GroupList /></MainLayout>} />
         <Route path="/about" element={<MainLayout><AboutPage /></MainLayout>} />
         
-        {/* Protect Admin Routes */}
         <Route 
           path="/admin/tasks" 
           element={<ProtectedRoute element={() => <MainLayout><TaskPage /></MainLayout>} />} 

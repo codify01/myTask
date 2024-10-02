@@ -4,9 +4,8 @@ import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import PageTitle from "../../utilities/PageTitle";
 import axios from "axios";
-import toast, { Toaster } from 'react-hot-toast'; // Import toast
+import toast, { Toaster } from 'react-hot-toast';
 
-// Validation schema for formik
 const validationSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email format").required("Email is required"),
   password: Yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
@@ -15,7 +14,6 @@ const validationSchema = Yup.object().shape({
 const Login = () => {
   const navigate = useNavigate();
 
-  // Formik setup for form handling
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -28,18 +26,15 @@ const Login = () => {
       const url = 'https://apitask.sunmence.com.ng/login.php';
       
       try {
-        // Make the API call with axios
         const { data } = await axios.post(url, values, { withCredentials: true });
         
         if (data.status === 'success') {
-          // Display success toast
           toast.success("Login successful!");
 
           // Save the token securely using httpOnly cookies (for better security)
           // For now, using localStorage (replace with secure cookie handling)
           localStorage.setItem('token', data.token);
 
-          // Fetch the session/user data if needed
           const token = localStorage.getItem('token');
           const options = {
             headers: {

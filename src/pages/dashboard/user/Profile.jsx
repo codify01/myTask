@@ -4,29 +4,57 @@ import Headline from "../../../components/Headline";
 import BtnOne from "../../../components/Buttons/BtnOne";
 import PageTitle from "../../../utilities/PageTitle";
 import { FaUpload } from "react-icons/fa";
+import axios from "axios";
 
 const Profile = () => {
-    const [fileName, setFileName] = useState('')
+    const [fileName, setFileName] = useState(null);
+    const user = JSON.parse(localStorage.getItem('user'));
 
     const formik = useFormik({
         initialValues: {
-            firstname: '',
-            lastname: '',
+            id:9,
+            firstname: user.firstname,
+            lastname: user.lastname,
             password: '',
-            profile_picture: null 
+            profilePic: null, // Initialize the profilePic field
         },
         onSubmit: (values) => {
-            console.log('Form Submitted:', values);
+            console.log(values);
+            
+            const formData = new FormData();
+            formData.append('id', values.firstname)
+            formData.append('firstname', values.firstname);
+            formData.append('lastname', values.lastname);
+            formData.append('password', values.password);
 
+            if (values.profilePic) {
+                formData.append('profilePic', values.profilePic); // Append file to FormData
+            }
+            console.log(values);
+            
+            axios.post('https://apitask.sunmence.com.ng/edit.php', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                }
+            })
+            .then((res) => {
+                console.log(res);
+                alert('Profile Updated Successfully');
+            })
+            .catch((err) => {
+                console.log(err);
+            });
         },
     });
+
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         if (file) {
             setFileName(file.name);
-            formik.setFieldValue('profile_picture', file)
+            formik.setFieldValue('profilePic', file); // Set the file directly, not FormData
         }
     };
+
     return (
         <div className="sContainer pt-3">
             <PageTitle title={'Profile'} />
@@ -35,6 +63,7 @@ const Profile = () => {
                 onSubmit={formik.handleSubmit}
                 className="flex mx-auto flex-wrap items-center justify-between w-90% max-w-[100%]"
             >
+                <input type="hidden" name="id" value={formik.values.id}/>
                 <div className="flex flex-col md:w-[48.5%] w-full">
                     <label htmlFor="firstname">Edit First Name</label>
                     <input
@@ -62,12 +91,12 @@ const Profile = () => {
                     <input
                         className="my-3 p-3 input-bg input-styles rounded-lg focus:outline-none"
                         type="file"
-                        id="profile_picture"
+                        id="profilePic"
                         style={{ display: 'none' }}
                         onChange={handleFileChange}
                     />
                     <label
-                        htmlFor="profile_picture"
+                        htmlFor="profilePic"
                         className="my-3 flex items-center py-3.5 px-2 input-bg input-styles cursor-pointer"
                     >
                         <FaUpload className="mr-2" />
